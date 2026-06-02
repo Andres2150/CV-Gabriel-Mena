@@ -3,47 +3,109 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-# =====================================================
-# CONFIGURACIÓN (DEBE IR PRIMERO)
-# =====================================================
+# ==================================================
+# CONFIGURACIÓN
+# ==================================================
 
 st.set_page_config(
-    page_title="Gabriel Mena | Business Intelligence",
+    page_title="Gabriel Mena Portfolio",
     page_icon="📊",
     layout="wide"
 )
 
-# =====================================================
-# PRESENTACIÓN
-# =====================================================
+# ==================================================
+# SIDEBAR
+# ==================================================
 
-st.title("👨‍💼 Gabriel Mena López")
+st.sidebar.title("📂 Menú")
 
-st.subheader("Business Intelligence | Data Analytics | Python")
+pagina = st.sidebar.radio(
+    "Seleccione una sección:",
+    ["🏠 Inicio", "👨‍💼 Currículum", "📊 Proyecto PBI LATAM"]
+)
 
-st.write("""
-Profesional orientado al análisis de datos, Business Intelligence,
-automatización de reportes y análisis comercial.
+# ==================================================
+# PORTADA
+# ==================================================
 
-Actualmente desarrollando proyectos en Python, SQL,
-Machine Learning y visualización de datos.
-""")
+if pagina == "🏠 Inicio":
 
-# =====================================================
-# PERFIL Y HABILIDADES
-# =====================================================
+    st.title("📊 Portafolio Profesional")
 
-col1, col2 = st.columns([1,2])
+    st.subheader("Gabriel Mena López")
 
-with col1:
+    st.write("""
+    Bienvenido a mi portafolio profesional desarrollado en Streamlit.
+
+    En este sitio encontrará:
+
+    ✅ Mi perfil profesional
+
+    ✅ Experiencia en Business Intelligence
+
+    ✅ Conocimientos en Python, SQL y Power BI
+
+    ✅ Proyecto de análisis económico de América Latina
+
+    Utilice el menú lateral izquierdo para navegar.
+    """)
+
     st.image(
         "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
-        width=180
+        width=250
     )
 
-with col2:
+# ==================================================
+# CURRICULUM
+# ==================================================
 
-    st.markdown("### Competencias")
+elif pagina == "👨‍💼 Currículum":
+
+    st.title("👨‍💼 Gabriel Mena López")
+
+    st.subheader(
+        "Business Intelligence | Data Analytics | Python"
+    )
+
+    col1, col2 = st.columns([1,2])
+
+    with col1:
+        st.image(
+            "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
+            width=200
+        )
+
+    with col2:
+
+        st.markdown("""
+        ### Perfil Profesional
+
+        Profesional orientado al análisis de datos,
+        Business Intelligence y automatización de reportes.
+
+        Experiencia en monitoreo de información,
+        indicadores de gestión y análisis comercial.
+        """)
+
+    st.header("💼 Experiencia")
+
+    st.write("""
+    **OSINERGMIN**
+
+    - Monitoreo de información.
+    - Elaboración de reportes.
+    - Validación de datos.
+    - Atención de usuarios.
+    - Seguimiento de indicadores.
+    """)
+
+    st.header("🛠 Habilidades")
+
+    st.write("Excel")
+    st.progress(90)
+
+    st.write("Power BI")
+    st.progress(85)
 
     st.write("SQL")
     st.progress(85)
@@ -51,91 +113,76 @@ with col2:
     st.write("Python")
     st.progress(80)
 
-    st.write("Power BI")
-    st.progress(85)
-
-    st.write("Excel")
-    st.progress(90)
-
     st.write("Machine Learning")
     st.progress(70)
 
-# =====================================================
-# DATA PBI LATAM
-# =====================================================
+    st.header("🎓 Formación")
 
-st.header("📈 Base de Datos PBI América Latina")
+    st.write("""
+    - Diplomado en Business Intelligence
+    - Python para Ciencia de Datos
+    - Power BI
+    - Análisis Comercial
+    - Inteligencia Artificial
+    """)
 
-data = {
-    "Country": [
-        "BRAZIL","MEXICO","ARGENTINA","COLOMBIA","CHILE","PERU",
-        "ECUADOR","REP_DOM","GUATEMALA","COSTA_RICA","PANAMA",
-        "URUGUAY","BOLIVIA","PARAGUAY","HONDURAS",
-        "EL_SALVADOR","NICARAGUA"
-    ],
+# ==================================================
+# PROYECTO PBI LATAM
+# ==================================================
 
-    2020:[1476.107,1121.065,385.741,270.348,253.88,209.984,
-          95.865,78.625,77.718,62.396,57.06,
-          53.557,36.897,35.432,23.35,24.921,12.73],
+elif pagina == "📊 Proyecto PBI LATAM":
 
-    2021:[1670.647,1316.569,486.564,318.525,315.457,229.832,
-          107.179,95.067,86.443,64.961,67.396,
-          60.742,40.701,39.951,28.146,29.043,14.208],
+    st.title("📊 Proyecto: PBI de América Latina")
 
-    2022:[1951.924,1466.935,632.79,345.632,301.227,248.204,
-          116.133,113.813,95.642,69.244,76.479,
-          70.6,44.329,41.953,31.425,31.87,15.634],
+    st.write("""
+    Análisis exploratorio del Producto Bruto Interno
+    de países latinoamericanos.
+    """)
 
-    2023:[2191.137,1794.41,646.075,366.292,335.518,271.78,
-          121.147,120.794,104.354,86.498,83.812,
-          77.997,45.464,43.118,34.356,33.854,17.813],
+    data = {
+        "Country": [
+            "BRAZIL","MEXICO","ARGENTINA","COLOMBIA",
+            "CHILE","PERU","ECUADOR","URUGUAY"
+        ],
 
-    2024:[2179.413,1830.489,633.267,418.818,330.267,294.675,
-          124.676,124.613,113.19,95.35,86.524,
-          80.961,46.967,44.458,37.1,35.365,19.694]
-}
+        2020:[1476,1121,385,270,253,209,95,53],
+        2021:[1670,1316,486,318,315,229,107,60],
+        2022:[1951,1466,632,345,301,248,116,70],
+        2023:[2191,1794,646,366,335,271,121,77],
+        2024:[2179,1830,633,418,330,294,124,80]
+    }
 
-df = pd.DataFrame(data)
-df = df.set_index("Country")
+    df = pd.DataFrame(data)
+    df = df.set_index("Country")
 
-st.dataframe(df)
+    st.subheader("Base de datos")
 
-# =====================================================
-# MATRIZ DE CORRELACIÓN TRIANGULAR
-# =====================================================
+    st.dataframe(df)
 
-st.header("🔍 Matriz de Correlación Triangular")
+    st.subheader("Matriz de correlación")
 
-corr = df.T.corr()
+    corr = df.T.corr()
 
-mask = np.triu(np.ones_like(corr, dtype=bool))
+    mask = np.triu(
+        np.ones_like(corr, dtype=bool)
+    )
 
-corr_masked = corr.mask(mask)
+    corr_mask = corr.mask(mask)
 
-fig, ax = plt.subplots(figsize=(10,8))
+    fig, ax = plt.subplots(figsize=(8,6))
 
-im = ax.imshow(corr_masked, aspect="auto")
+    im = ax.imshow(corr_mask)
 
-ax.set_xticks(range(len(corr.columns)))
-ax.set_xticklabels(corr.columns, rotation=90)
+    ax.set_xticks(range(len(corr.columns)))
+    ax.set_xticklabels(corr.columns, rotation=90)
 
-ax.set_yticks(range(len(corr.columns)))
-ax.set_yticklabels(corr.columns)
+    ax.set_yticks(range(len(corr.columns)))
+    ax.set_yticklabels(corr.columns)
 
-plt.colorbar(im)
+    plt.colorbar(im)
 
-plt.title("Correlación del PBI entre países")
+    st.pyplot(fig)
 
-st.pyplot(fig)
+    st.subheader("Estadísticos descriptivos")
 
-# =====================================================
-# CONTACTO
-# =====================================================
-
-st.header("📞 Contacto")
-
-st.write("📍 Lima, Perú")
-st.write("🐙 GitHub: github.com/Andres2150")
-st.write("📊 Business Intelligence & Data Analytics")
-
-st.success("Gracias por visitar mi portafolio profesional.")
+    st.dataframe(df.T.describe())
