@@ -3,38 +3,37 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-# ==========================================
-# CONFIGURACIÓN
-# ==========================================
+# =====================================================
+# CONFIGURACIÓN (DEBE IR PRIMERO)
+# =====================================================
+
 st.set_page_config(
-    page_title="Gabriel Mena | BI Portfolio",
+    page_title="Gabriel Mena | Business Intelligence",
     page_icon="📊",
     layout="wide"
 )
 
-# ==========================================
-# SIDEBAR
-# ==========================================
-st.sidebar.title("📌 Menú")
-st.sidebar.info("Portafolio Profesional")
+# =====================================================
+# PRESENTACIÓN
+# =====================================================
 
-# ==========================================
-# ENCABEZADO
-# ==========================================
 st.title("👨‍💼 Gabriel Mena López")
+
 st.subheader("Business Intelligence | Data Analytics | Python")
 
-st.write(
-    """
-    Profesional con experiencia en análisis de datos, indicadores de gestión,
-    Business Intelligence y automatización de reportes.
-    """
-)
+st.write("""
+Profesional orientado al análisis de datos, Business Intelligence,
+automatización de reportes y análisis comercial.
 
-# ==========================================
-# PERFIL
-# ==========================================
-col1, col2 = st.columns([1, 3])
+Actualmente desarrollando proyectos en Python, SQL,
+Machine Learning y visualización de datos.
+""")
+
+# =====================================================
+# PERFIL Y HABILIDADES
+# =====================================================
+
+col1, col2 = st.columns([1,2])
 
 with col1:
     st.image(
@@ -43,117 +42,100 @@ with col1:
     )
 
 with col2:
-    st.markdown("""
-    ### Perfil Profesional
 
-    ✔ Análisis de datos y Business Intelligence
+    st.markdown("### Competencias")
 
-    ✔ Python, SQL, Power BI y Excel
+    st.write("SQL")
+    st.progress(85)
 
-    ✔ Dashboards y KPIs
+    st.write("Python")
+    st.progress(80)
 
-    ✔ Machine Learning e Inteligencia Artificial
+    st.write("Power BI")
+    st.progress(85)
 
-    ✔ Análisis comercial y exportaciones
-    """)
+    st.write("Excel")
+    st.progress(90)
 
-# ==========================================
-# EXPERIENCIA
-# ==========================================
-st.header("💼 Experiencia")
+    st.write("Machine Learning")
+    st.progress(70)
 
-st.write("""
-**OSINERGMIN**
+# =====================================================
+# DATA PBI LATAM
+# =====================================================
 
-- Monitoreo y validación de información.
-- Elaboración de reportes ejecutivos.
-- Atención a usuarios y soporte operativo.
-- Seguimiento de indicadores.
-""")
+st.header("📈 Base de Datos PBI América Latina")
 
-# ==========================================
-# HABILIDADES
-# ==========================================
-st.header("🛠 Habilidades")
+data = {
+    "Country": [
+        "BRAZIL","MEXICO","ARGENTINA","COLOMBIA","CHILE","PERU",
+        "ECUADOR","REP_DOM","GUATEMALA","COSTA_RICA","PANAMA",
+        "URUGUAY","BOLIVIA","PARAGUAY","HONDURAS",
+        "EL_SALVADOR","NICARAGUA"
+    ],
 
-st.write("Excel")
-st.progress(90)
+    2020:[1476.107,1121.065,385.741,270.348,253.88,209.984,
+          95.865,78.625,77.718,62.396,57.06,
+          53.557,36.897,35.432,23.35,24.921,12.73],
 
-st.write("Power BI")
-st.progress(85)
+    2021:[1670.647,1316.569,486.564,318.525,315.457,229.832,
+          107.179,95.067,86.443,64.961,67.396,
+          60.742,40.701,39.951,28.146,29.043,14.208],
 
-st.write("Python")
-st.progress(80)
+    2022:[1951.924,1466.935,632.79,345.632,301.227,248.204,
+          116.133,113.813,95.642,69.244,76.479,
+          70.6,44.329,41.953,31.425,31.87,15.634],
 
-st.write("SQL")
-st.progress(75)
+    2023:[2191.137,1794.41,646.075,366.292,335.518,271.78,
+          121.147,120.794,104.354,86.498,83.812,
+          77.997,45.464,43.118,34.356,33.854,17.813],
 
-st.write("Machine Learning")
-st.progress(65)
-
-# ==========================================
-# PROYECTOS
-# ==========================================
-st.header("📊 Proyectos")
-
-st.markdown("""
-### Acceso a la Salud en Perú
-- Regresión logística
-- Correlaciones
-- ENAHO
-
-### Análisis de Exportaciones
-- Dashboards comerciales
-- Tendencias de mercado
-
-### Business Intelligence
-- KPIs
-- Automatización de reportes
-""")
-
-# ==========================================
-# MATRIZ DE CORRELACIÓN (EJEMPLO)
-# ==========================================
-st.header("📈 Matriz de Correlación")
-
-# Datos de ejemplo
-datos = {
-    "Python": [75,80,85,90,95],
-    "SQL": [70,75,80,85,90],
-    "PowerBI": [65,72,78,88,92],
-    "Excel": [80,85,90,95,100]
+    2024:[2179.413,1830.489,633.267,418.818,330.267,294.675,
+          124.676,124.613,113.19,95.35,86.524,
+          80.961,46.967,44.458,37.1,35.365,19.694]
 }
 
-df = pd.DataFrame(datos)
+df = pd.DataFrame(data)
+df = df.set_index("Country")
 
-corr = df.corr()
+st.dataframe(df)
+
+# =====================================================
+# MATRIZ DE CORRELACIÓN TRIANGULAR
+# =====================================================
+
+st.header("🔍 Matriz de Correlación Triangular")
+
+corr = df.T.corr()
 
 mask = np.triu(np.ones_like(corr, dtype=bool))
 
-fig, ax = plt.subplots(figsize=(6,5))
+corr_masked = corr.mask(mask)
 
-im = ax.imshow(
-    np.ma.masked_where(mask, corr),
-    aspect="auto"
-)
+fig, ax = plt.subplots(figsize=(10,8))
+
+im = ax.imshow(corr_masked, aspect="auto")
 
 ax.set_xticks(range(len(corr.columns)))
-ax.set_xticklabels(corr.columns, rotation=45)
+ax.set_xticklabels(corr.columns, rotation=90)
 
 ax.set_yticks(range(len(corr.columns)))
 ax.set_yticklabels(corr.columns)
 
 plt.colorbar(im)
 
+plt.title("Correlación del PBI entre países")
+
 st.pyplot(fig)
 
-# ==========================================
+# =====================================================
 # CONTACTO
-# ==========================================
+# =====================================================
+
 st.header("📞 Contacto")
 
-st.write("🌎 Lima, Perú")
+st.write("📍 Lima, Perú")
 st.write("🐙 GitHub: github.com/Andres2150")
-st.write("💼 LinkedIn: linkedin.com/in/gabrielmena")
+st.write("📊 Business Intelligence & Data Analytics")
 
-st.success("Gracias por visitar mi portafolio.")
+st.success("Gracias por visitar mi portafolio profesional.")
