@@ -116,11 +116,13 @@ elif pagina == "👨‍💼 Currículum":
     st.markdown("""
     ### OSINERGMIN
 
-    - Monitoreo y validación de información.
-    - Elaboración de reportes e indicadores.
-    - Atención de usuarios.
-    - Seguimiento de incidencias.
-    - Análisis de información para toma de decisiones.
+Monitoreo y análisis de información comercial relacionada con la distribución y comercialización de hidrocarburos líquidos y GLP a nivel nacional.
+Extracción, validación y depuración de datos provenientes de sistemas corporativos Oracle para asegurar la calidad y consistencia de la información utilizada en reportes de gestión.
+Elaboración de reportes analíticos mediante Excel avanzado (tablas dinámicas, segmentaciones, indicadores y gráficos ejecutivos) para el seguimiento de ventas y operaciones del sector energético.
+Identificación de incidencias y anomalías en registros comerciales, contribuyendo a la mejora de la calidad de datos y continuidad operativa.
+Análisis de tendencias y comportamiento de registros comerciales para apoyar procesos de supervisión y toma de decisiones.
+Participación en pruebas funcionales y validación de cambios antes de pases a producción del sistema SCOP.
+Capacitación a empresas del sector energético sobre procesos comerciales, flujos operativos y normativa
     """)
 
     # ==========================================
