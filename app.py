@@ -1,3 +1,4 @@
+```python
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -14,13 +15,13 @@ st.set_page_config(
 )
 
 # =====================================================
-# MENÚ LATERAL
+# SIDEBAR
 # =====================================================
 
-st.sidebar.title("📂 Portafolio")
+st.sidebar.title("📂 Portafolio Profesional")
 
 pagina = st.sidebar.radio(
-    "Seleccionar sección",
+    "Seleccione una sección",
     [
         "🏠 Inicio",
         "👨‍💼 Currículum",
@@ -43,22 +44,26 @@ if pagina == "🏠 Inicio":
 
     Este espacio reúne mi experiencia en:
 
-    - Business Intelligence
-    - Análisis de Datos
-    - Python
-    - SQL
-    - Power BI
-    - Machine Learning
-    - Forecasting
-    - Inteligencia Artificial
+    • Business Intelligence
+
+    • Data Analytics
+
+    • Python
+
+    • SQL
+
+    • Power BI
+
+    • Machine Learning
+
+    • Forecasting
+
+    • Inteligencia Artificial
 
     Utilice el menú lateral para navegar entre las secciones.
     """)
 
-    st.image(
-        "dmc.jpg",
-        width=300
-    )
+    st.info("Seleccione una opción del menú lateral izquierdo.")
 
 # =====================================================
 # CURRICULUM
@@ -77,6 +82,10 @@ elif pagina == "👨‍💼 Currículum":
     Business Intelligence, automatización de reportes
     y generación de indicadores para la toma de decisiones.
     """)
+
+    # ==========================================
+    # HABILIDADES
+    # ==========================================
 
     st.header("🛠 Habilidades")
 
@@ -98,109 +107,94 @@ elif pagina == "👨‍💼 Currículum":
     st.write("Forecasting")
     st.progress(75)
 
+    # ==========================================
+    # EXPERIENCIA
+    # ==========================================
+
     st.header("💼 Experiencia Profesional")
 
     st.markdown("""
-    **OSINERGMIN**
+    ### OSINERGMIN
 
     - Monitoreo y validación de información.
-    - Elaboración de reportes.
+    - Elaboración de reportes e indicadores.
     - Atención de usuarios.
-    - Seguimiento de indicadores.
+    - Seguimiento de incidencias.
     - Análisis de información para toma de decisiones.
     """)
 
+    # ==========================================
+    # ESTUDIOS
+    # ==========================================
+
     st.header("🎓 Estudios y Certificaciones")
 
-    st.markdown("""
-    ### Bachiller en Ingeniería Industrial
-    Universidad Tecnológica del Perú
+    st.markdown("### Bachiller en Ingeniería Industrial")
+    st.write("Universidad Tecnológica del Perú")
 
-    ---
+    st.divider()
 
-    ### Especialización en Gestión de la Producción
-    Planeamiento, Costos, Mantenimiento, Mejora Continua y Calidad
+    st.markdown("### Especialización en Gestión de la Producción")
+    st.write("Planeamiento, Costos, Mantenimiento, Mejora Continua y Calidad")
+    st.write("Universidad Nacional de Ingeniería")
+    st.write("Setiembre 2010 – Febrero 2011")
+    st.write("100 horas")
 
-    Universidad Nacional de Ingeniería
+    st.divider()
 
-    Setiembre 2010 – Febrero 2011
+    st.markdown("### Curso Taller: Auditoría de Sistemas Integrados de Gestión")
+    st.write("ISO 9001, ISO 14001 y OHSAS 18001")
+    st.write("Universidad Nacional de Ingeniería")
+    st.write("Agosto – Setiembre 2010")
+    st.write("20 horas")
 
-    100 horas
+    st.divider()
 
-    ---
+    st.markdown("### Diplomado en Data Science")
+    st.write("Modelos Supervisados, Clusterización y Machine Learning")
+    st.write("Instituto DMC")
+    st.write("Noviembre 2025 – Marzo 2026")
+    st.write("96 horas")
 
-    ### Curso Taller: Auditoría de Sistemas Integrados de Gestión
-    ISO 9001, ISO 14001 y OHSAS 18001
+    st.divider()
 
-    Universidad Nacional de Ingeniería
+    st.markdown("### Programa Especializado en Machine Learning con Python")
+    st.write("Laboratorio de Datos Sociales")
+    st.write("Septiembre 2025 – Enero 2026")
+    st.write("75 horas")
 
-    Agosto – Setiembre 2010
+    st.divider()
 
-    20 horas
+    st.markdown("### Programa de Alta Especialización en Análisis Predictivo")
+    st.write("Pronósticos y Forecasting")
+    st.write("Escuela Global")
+    st.write("Enero – Junio 2025")
+    st.write("200 horas")
 
-    ---
+    st.divider()
 
-    ### Diplomado en Data Science
+    st.markdown("### Diplomado Especializado en Derecho de la Energía e Hidrocarburos")
+    st.write("ICADEG")
+    st.write("Noviembre 2024 – Enero 2025")
+    st.write("120 horas")
 
-    Modelos Supervisados, Clusterización y Machine Learning
+    st.divider()
 
-    Instituto DMC
+    st.markdown("### Programación y Ciencia de Datos con Python y RStudio")
+    st.write("Escuela Global")
+    st.write("Setiembre – Diciembre 2023")
+    st.write("170 horas")
 
-    Noviembre 2025 – Marzo 2026
+    st.divider()
 
-    96 horas
+    st.markdown("### Curso de Tablas Dinámicas con Excel")
+    st.write("Instituto DMC")
+    st.write("Enero 2017")
+    st.write("8 horas")
 
-    ---
-
-    ### Programa Especializado en Machine Learning con Python
-
-    Laboratorio de Datos Sociales
-
-    Septiembre 2025 – Enero 2026
-
-    75 horas
-
-    ---
-
-    ### Programa de Alta Especialización en Análisis Predictivo,
-    Pronósticos y Forecasting
-
-    Escuela Global
-
-    Enero – Junio 2025
-
-    200 horas
-
-    ---
-
-    ### Diplomado Especializado en Derecho de la Energía e Hidrocarburos
-
-    ICADEG
-
-    Noviembre 2024 – Enero 2025
-
-    120 horas
-
-    ---
-
-    ### Programación y Ciencia de Datos con Python y RStudio
-
-    Escuela Global
-
-    Setiembre – Diciembre 2023
-
-    170 horas
-
-    ---
-
-    ### Curso de Tablas Dinámicas con Excel
-
-    Instituto DMC
-
-    Enero 2017
-
-    8 horas
-    """)
+    # ==========================================
+    # ÁREAS DE ESPECIALIZACIÓN
+    # ==========================================
 
     st.header("🚀 Áreas de Especialización")
 
@@ -242,7 +236,6 @@ elif pagina == "📊 Proyecto PBI LATAM":
             "ECUADOR",
             "URUGUAY"
         ],
-
         2020: [1476,1121,385,270,253,209,95,53],
         2021: [1670,1316,486,318,315,229,107,60],
         2022: [1951,1466,632,345,301,248,116,70],
@@ -265,9 +258,7 @@ elif pagina == "📊 Proyecto PBI LATAM":
 
     corr = df.T.corr()
 
-    mask = np.triu(
-        np.ones_like(corr, dtype=bool)
-    )
+    mask = np.triu(np.ones_like(corr, dtype=bool))
 
     corr_masked = corr.mask(mask)
 
@@ -285,7 +276,9 @@ elif pagina == "📊 Proyecto PBI LATAM":
 
     st.pyplot(fig)
 
-    st.success("Proyecto de análisis económico desarrollado en Python.")
+    st.success(
+        "Proyecto de análisis económico desarrollado en Python."
+    )
 
 # =====================================================
 # PIE DE PÁGINA
@@ -294,3 +287,5 @@ elif pagina == "📊 Proyecto PBI LATAM":
 st.sidebar.markdown("---")
 st.sidebar.write("Gabriel Mena López")
 st.sidebar.write("Business Intelligence")
+```
+
