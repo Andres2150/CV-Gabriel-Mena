@@ -3,30 +3,34 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-# ==================================================
+# =====================================================
 # CONFIGURACIÓN
-# ==================================================
+# =====================================================
 
 st.set_page_config(
-    page_title="Gabriel Mena Portfolio",
+    page_title="Gabriel Mena | Portfolio",
     page_icon="📊",
     layout="wide"
 )
 
-# ==================================================
-# SIDEBAR
-# ==================================================
+# =====================================================
+# MENÚ LATERAL
+# =====================================================
 
-st.sidebar.title("📂 Menú")
+st.sidebar.title("📂 Portafolio")
 
 pagina = st.sidebar.radio(
-    "Seleccione una sección:",
-    ["🏠 Inicio", "👨‍💼 Currículum", "📊 Proyecto PBI LATAM"]
+    "Seleccionar sección",
+    [
+        "🏠 Inicio",
+        "👨‍💼 Currículum",
+        "📊 Proyecto PBI LATAM"
+    ]
 )
 
-# ==================================================
-# PORTADA
-# ==================================================
+# =====================================================
+# INICIO
+# =====================================================
 
 if pagina == "🏠 Inicio":
 
@@ -35,29 +39,30 @@ if pagina == "🏠 Inicio":
     st.subheader("Gabriel Mena López")
 
     st.write("""
-    Bienvenido a mi portafolio profesional desarrollado en Streamlit.
+    Bienvenido a mi portafolio profesional.
 
-    En este sitio encontrará:
+    Este espacio reúne mi experiencia en:
 
-    ✅ Mi perfil profesional
+    - Business Intelligence
+    - Análisis de Datos
+    - Python
+    - SQL
+    - Power BI
+    - Machine Learning
+    - Forecasting
+    - Inteligencia Artificial
 
-    ✅ Experiencia en Business Intelligence
-
-    ✅ Conocimientos en Python, SQL y Power BI
-
-    ✅ Proyecto de análisis económico de América Latina
-
-    Utilice el menú lateral izquierdo para navegar.
+    Utilice el menú lateral para navegar entre las secciones.
     """)
 
     st.image(
-        "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
-        width=250
+        "dmc.jpg",
+        width=300
     )
 
-# ==================================================
+# =====================================================
 # CURRICULUM
-# ==================================================
+# =====================================================
 
 elif pagina == "👨‍💼 Currículum":
 
@@ -67,36 +72,10 @@ elif pagina == "👨‍💼 Currículum":
         "Business Intelligence | Data Analytics | Python"
     )
 
-    col1, col2 = st.columns([1,2])
-
-    with col1:
-        st.image(
-            "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
-            width=200
-        )
-
-    with col2:
-
-        st.markdown("""
-        ### Perfil Profesional
-
-        Profesional orientado al análisis de datos,
-        Business Intelligence y automatización de reportes.
-
-        Experiencia en monitoreo de información,
-        indicadores de gestión y análisis comercial.
-        """)
-
-    st.header("💼 Experiencia")
-
     st.write("""
-    **OSINERGMIN**
-
-    - Monitoreo de información.
-    - Elaboración de reportes.
-    - Validación de datos.
-    - Atención de usuarios.
-    - Seguimiento de indicadores.
+    Profesional orientado al análisis de datos,
+    Business Intelligence, automatización de reportes
+    y generación de indicadores para la toma de decisiones.
     """)
 
     st.header("🛠 Habilidades")
@@ -114,25 +93,138 @@ elif pagina == "👨‍💼 Currículum":
     st.progress(80)
 
     st.write("Machine Learning")
-    st.progress(70)
+    st.progress(75)
 
-    st.header("🎓 Formación")
+    st.write("Forecasting")
+    st.progress(75)
 
-    st.write("""
-    - Diplomado en Business Intelligence
-    - Python para Ciencia de Datos
-    - Power BI
-    - Análisis Comercial
-    - Inteligencia Artificial
+    st.header("💼 Experiencia Profesional")
+
+    st.markdown("""
+    **OSINERGMIN**
+
+    - Monitoreo y validación de información.
+    - Elaboración de reportes.
+    - Atención de usuarios.
+    - Seguimiento de indicadores.
+    - Análisis de información para toma de decisiones.
     """)
 
-# ==================================================
+    st.header("🎓 Estudios y Certificaciones")
+
+    st.markdown("""
+    ### Bachiller en Ingeniería Industrial
+    Universidad Tecnológica del Perú
+
+    ---
+
+    ### Especialización en Gestión de la Producción
+    Planeamiento, Costos, Mantenimiento, Mejora Continua y Calidad
+
+    Universidad Nacional de Ingeniería
+
+    Setiembre 2010 – Febrero 2011
+
+    100 horas
+
+    ---
+
+    ### Curso Taller: Auditoría de Sistemas Integrados de Gestión
+    ISO 9001, ISO 14001 y OHSAS 18001
+
+    Universidad Nacional de Ingeniería
+
+    Agosto – Setiembre 2010
+
+    20 horas
+
+    ---
+
+    ### Diplomado en Data Science
+
+    Modelos Supervisados, Clusterización y Machine Learning
+
+    Instituto DMC
+
+    Noviembre 2025 – Marzo 2026
+
+    96 horas
+
+    ---
+
+    ### Programa Especializado en Machine Learning con Python
+
+    Laboratorio de Datos Sociales
+
+    Septiembre 2025 – Enero 2026
+
+    75 horas
+
+    ---
+
+    ### Programa de Alta Especialización en Análisis Predictivo,
+    Pronósticos y Forecasting
+
+    Escuela Global
+
+    Enero – Junio 2025
+
+    200 horas
+
+    ---
+
+    ### Diplomado Especializado en Derecho de la Energía e Hidrocarburos
+
+    ICADEG
+
+    Noviembre 2024 – Enero 2025
+
+    120 horas
+
+    ---
+
+    ### Programación y Ciencia de Datos con Python y RStudio
+
+    Escuela Global
+
+    Setiembre – Diciembre 2023
+
+    170 horas
+
+    ---
+
+    ### Curso de Tablas Dinámicas con Excel
+
+    Instituto DMC
+
+    Enero 2017
+
+    8 horas
+    """)
+
+    st.header("🚀 Áreas de Especialización")
+
+    st.markdown("""
+    - Business Intelligence
+    - Data Analytics
+    - SQL
+    - Python
+    - Power BI
+    - Machine Learning
+    - Forecasting
+    - Inteligencia Artificial
+    - Análisis Comercial
+    - Exportaciones
+    - Hidrocarburos y Energía
+    """)
+
+# =====================================================
 # PROYECTO PBI LATAM
-# ==================================================
+# =====================================================
 
 elif pagina == "📊 Proyecto PBI LATAM":
 
-    st.title("📊 Proyecto: PBI de América Latina")
+    st.title("📊 Proyecto PBI América Latina")
 
     st.write("""
     Análisis exploratorio del Producto Bruto Interno
@@ -141,25 +233,35 @@ elif pagina == "📊 Proyecto PBI LATAM":
 
     data = {
         "Country": [
-            "BRAZIL","MEXICO","ARGENTINA","COLOMBIA",
-            "CHILE","PERU","ECUADOR","URUGUAY"
+            "BRAZIL",
+            "MEXICO",
+            "ARGENTINA",
+            "COLOMBIA",
+            "CHILE",
+            "PERU",
+            "ECUADOR",
+            "URUGUAY"
         ],
 
-        2020:[1476,1121,385,270,253,209,95,53],
-        2021:[1670,1316,486,318,315,229,107,60],
-        2022:[1951,1466,632,345,301,248,116,70],
-        2023:[2191,1794,646,366,335,271,121,77],
-        2024:[2179,1830,633,418,330,294,124,80]
+        2020: [1476,1121,385,270,253,209,95,53],
+        2021: [1670,1316,486,318,315,229,107,60],
+        2022: [1951,1466,632,345,301,248,116,70],
+        2023: [2191,1794,646,366,335,271,121,77],
+        2024: [2179,1830,633,418,330,294,124,80]
     }
 
     df = pd.DataFrame(data)
     df = df.set_index("Country")
 
-    st.subheader("Base de datos")
+    st.subheader("Base de Datos")
 
     st.dataframe(df)
 
-    st.subheader("Matriz de correlación")
+    st.subheader("Estadísticos Descriptivos")
+
+    st.dataframe(df.T.describe())
+
+    st.subheader("Matriz de Correlación")
 
     corr = df.T.corr()
 
@@ -167,11 +269,11 @@ elif pagina == "📊 Proyecto PBI LATAM":
         np.ones_like(corr, dtype=bool)
     )
 
-    corr_mask = corr.mask(mask)
+    corr_masked = corr.mask(mask)
 
-    fig, ax = plt.subplots(figsize=(8,6))
+    fig, ax = plt.subplots(figsize=(10, 8))
 
-    im = ax.imshow(corr_mask)
+    im = ax.imshow(corr_masked)
 
     ax.set_xticks(range(len(corr.columns)))
     ax.set_xticklabels(corr.columns, rotation=90)
@@ -183,6 +285,12 @@ elif pagina == "📊 Proyecto PBI LATAM":
 
     st.pyplot(fig)
 
-    st.subheader("Estadísticos descriptivos")
+    st.success("Proyecto de análisis económico desarrollado en Python.")
 
-    st.dataframe(df.T.describe())
+# =====================================================
+# PIE DE PÁGINA
+# =====================================================
+
+st.sidebar.markdown("---")
+st.sidebar.write("Gabriel Mena López")
+st.sidebar.write("Business Intelligence")
