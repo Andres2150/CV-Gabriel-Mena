@@ -18,7 +18,7 @@ st.set_page_config(
 # SIDEBAR
 # =====================================================
 
-st.sidebar.title("📂 Portafolio Profesional")
+st.sidebar.title("📂 Gabriel Mena López")
 
 pagina = st.sidebar.radio(
     "Seleccione una sección",
