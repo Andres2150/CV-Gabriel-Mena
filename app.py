@@ -369,20 +369,15 @@ if archivo:
 
     with tab3:
         st.subheader("Suite de Visualización")
-        
-        # Cambio de selectbox a radio horizontal para mejor diagramación
         tipo_graf = st.radio(
             "Seleccionar tipo de gráfico", 
-            ["Relación (Plotly)", "Distribución (Seaborn)", "Correlación (Heatmap)"],
+            ["Relación (Plotly)", "Distribución (Seaborn)", "Correlación (Heatmap)", "Boxplot (Outliers)", "Densidad (Skew/Kurt)"],
             horizontal=True
         )
         
-        # Layout horizontal para las selecciones de ejes
         c1, c2 = st.columns(2)
-        with c1:
-            col_x = st.selectbox("Eje X", df.columns)
-        with c2:
-            col_y = st.selectbox("Eje Y", df.select_dtypes(include=np.number).columns)
+        with c1: col_x = st.selectbox("Eje X", df.columns)
+        with c2: col_y = st.selectbox("Eje Y", df.select_dtypes(include=np.number).columns)
 
         if tipo_graf == "Relación (Plotly)":
             fig = px.scatter(df, x=col_x, y=col_y, color=df.columns[0], template="plotly_dark")
@@ -396,9 +391,23 @@ if archivo:
         elif tipo_graf == "Correlación (Heatmap)":
             corr = df.select_dtypes(include=np.number).corr()
             mask = np.triu(np.ones_like(corr, dtype=bool))
-            
             fig, ax = plt.subplots(figsize=(10, 8))
             sns.heatmap(corr, mask=mask, annot=True, cmap="coolwarm", fmt=".2f", ax=ax, square=True)
+            st.pyplot(fig)
+
+        elif tipo_graf == "Boxplot (Outliers)":
+            fig = px.box(df, y=col_y, title=f"Outliers: {col_y}", template="plotly_white")
+            st.plotly_chart(fig, use_container_width=True)
+
+        elif tipo_graf == "Densidad (Skew/Kurt)":
+            from scipy.stats import shapiro
+            skew = df[col_y].skew()
+            kurt = df[col_y].kurt()
+            stat, p = shapiro(df[col_y].dropna()) # Test de normalidad
+            
+            fig, ax = plt.subplots(figsize=(10, 4))
+            sns.kdeplot(df[col_y], fill=True, color="purple", ax=ax)
+            ax.set_title(f"Normalidad: P-value {p:.4f} | Skew: {skew:.2f} | Kurt: {kurt:.2f}")
             st.pyplot(fig)
 
     with tab4:
