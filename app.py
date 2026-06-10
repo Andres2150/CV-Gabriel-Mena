@@ -162,7 +162,7 @@ Capacitación a empresas del sector energético sobre procesos comerciales, fluj
     st.divider()
 
     st.markdown("### Diplomado Business Analyst")
-    st.write("Modelos Supervisados, Clusterización y Machine Learning")
+    st.write("Identificar necesidades del negocio, analizar procesos y datos, y convertirlos en soluciones que mejoren la toma de decisiones y los resultados de la empresa.")
     st.write("Instituto DMC")
     st.write("Abril 2026 – Septiembre 2026")
     st.write("116 horas")
