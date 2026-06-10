@@ -314,7 +314,13 @@ elif pagina == "📊 Proyecto PBI LATAM":
         "Proyecto de análisis económico desarrollado en Python."
     )
 
-elif pagina == "Entregable Python"
+
+
+# =====================================================
+# PROYECTO ENTREGABLE
+# =====================================================
+
+elif pagina == "Entregable Python":
 
     st.title("Proyecto Entregable")
 
