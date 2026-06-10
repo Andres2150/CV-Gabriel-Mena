@@ -3,6 +3,10 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+import seaborn as sns
+import plotly.express as px
+import plotly.graph_objects as go
+
 
 # =====================================================
 # CONFIGURACIÓN
@@ -325,7 +329,71 @@ elif pagina == "Entregable Python":
 
     st.title("Proyecto Entregable")
 
-    st.write("")
+
+# Configuración de estilo
+st.set_page_config(page_title="Data Science Suite", layout="wide")
+sns.set_theme(style="whitegrid")
+
+# --- FUNCIONES DE PROCESAMIENTO ---
+@st.cache_data
+def cargar_datos(archivo):
+    return pd.read_csv(archivo) if archivo.name.endswith('.csv') else pd.read_excel(archivo)
+
+def generar_reporte_nulos(df):
+    nulos = df.isnull().sum()
+    return nulos[nulos > 0]
+
+# --- INTERFAZ ---
+st.title("🚀 Advanced Analytics Dashboard")
+st.sidebar.header("Carga de Datos")
+archivo = st.sidebar.file_uploader("Subir dataset", type=["csv", "xlsx"])
+
+if archivo:
+    df = cargar_datos(archivo)
+    
+    # Dashboard Layout
+    tab1, tab2, tab3, tab4 = st.tabs(["📊 Exploración", "🔍 Calidad de Datos", "📉 Visualización Avanzada", "🤖 Análisis Estadístico"])
+
+    with tab1:
+        st.subheader("Vista Previa del Dataset")
+        st.dataframe(df.head(10), use_container_width=True)
+        st.write(f"Dimensiones: {df.shape[0]} filas, {df.shape[1]} columnas")
+
+    with tab2:
+        st.subheader("Diagnóstico de Nulos")
+        nulos = generar_reporte_nulos(df)
+        if not nulos.empty:
+            st.bar_chart(nulos)
+        else:
+            st.success("¡Dataset limpio! No se encontraron valores nulos.")
+
+    with tab3:
+        st.subheader("Suite de Visualización")
+        tipo_graf = st.selectbox("Seleccionar tipo de gráfico", ["Relación (Plotly)", "Distribución (Seaborn)", "Correlación (Heatmap)"])
+        
+        col_x = st.selectbox("Eje X", df.columns)
+        col_y = st.selectbox("Eje Y", df.select_dtypes(include=np.number).columns)
+
+        if tipo_graf == "Relación (Plotly)":
+            fig = px.scatter(df, x=col_x, y=col_y, color=df.columns[0], template="plotly_dark")
+            st.plotly_chart(fig, use_container_width=True)
+            
+        elif tipo_graf == "Distribución (Seaborn)":
+            fig, ax = plt.subplots(figsize=(10, 5))
+            sns.histplot(df[col_y], kde=True, color="teal", ax=ax)
+            st.pyplot(fig)
+            
+        elif tipo_graf == "Correlación (Heatmap)":
+            fig, ax = plt.subplots(figsize=(10, 8))
+            sns.heatmap(df.select_dtypes(include=np.number).corr(), annot=True, cmap="coolwarm", ax=ax)
+            st.pyplot(fig)
+
+    with tab4:
+        st.subheader("Estadísticos de Tendencia")
+        st.table(df.describe().T)
+else:
+    st.info("Cargue un archivo en la barra lateral para inicializar el motor de análisis.")
+
 
 
 # =====================================================
