@@ -142,6 +142,7 @@ Capacitación a empresas del sector energético sobre procesos comerciales, fluj
 
     st.markdown("### Bachiller en Ingeniería Industrial")
     st.write("Universidad Tecnológica del Perú")
+    st.write("Egresado Año 2013")
 
     st.divider()
 
