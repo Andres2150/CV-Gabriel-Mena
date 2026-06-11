@@ -256,6 +256,8 @@ Capacitación a empresas del sector energético sobre procesos comerciales, fluj
     - Hidrocarburos y Energía
     """)
 
+
+
 # =====================================================
 # PROYECTO PBI LATAM
 # =====================================================
@@ -351,8 +353,14 @@ archivo = st.sidebar.file_uploader("Subir dataset", type=["csv", "xlsx"])
 if archivo:
     df = cargar_datos(archivo)
     
-    # Dashboard Layout
-    tab1, tab2, tab3, tab4 = st.tabs(["📊 Exploración", "🔍 Calidad de Datos", "📉 Visualización Avanzada", "🤖 Análisis Estadístico"])
+    # Dashboard Layout: Definimos las 5 pestañas aquí
+    tab1, tab2, tab3, tab4, tab5 = st.tabs([
+        "📊 Exploración", 
+        "🔍 Calidad de Datos", 
+        "📉 Visualización Avanzada", 
+        "🤖 Análisis Estadístico", 
+        "⚠️ Detección de Anomalías"
+    ])
 
     with tab1:
         st.subheader("Vista Previa del Dataset")
@@ -428,14 +436,18 @@ if archivo:
             ax.set_title(f"Normalidad: P-value {p:.4f} | Skew: {skew:.2f} | Kurt: {kurt:.2f}")
             st.pyplot(fig)
 
-    with tab4:
-        st.subheader("Estadísticos de Tendencia")
-        st.table(df.describe().T)
+# ... (código de los tabs 1, 2, 3, 4) ...
 
-    with tab5:
+    with tab4:
+        st.subheader("Resumen Estadístico Profundo")
+        resumen = df.describe().T
+        resumen['skew'] = df.skew(numeric_only=True)
+        resumen['kurt'] = df.kurt(numeric_only=True)
+        st.dataframe(resumen, use_container_width=True)
+
+    with tab5: # Ahora tab5 ya existe
         st.subheader("⚠️ Detección Automática de Anomalías")
         umbral = st.slider("Seleccionar umbral de Z-Score (sensibilidad)", 1.5, 3.5, 3.0)
-        
         col_outlier = st.selectbox("Seleccionar columna para buscar anomalías", df.select_dtypes(include=np.number).columns)
         
         # Cálculo de Z-Score
@@ -445,7 +457,6 @@ if archivo:
         if not anomalies.empty:
             st.warning(f"Se detectaron {len(anomalies)} filas fuera del rango estadístico.")
             st.dataframe(anomalies)
-            # Botón de descarga para los datos filtrados
             csv = anomalies.to_csv(index=False).encode('utf-8')
             st.download_button("Descargar Anomalías (CSV)", csv, "anomalias.csv", "text/csv")
         else:
