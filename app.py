@@ -163,8 +163,7 @@ elif pagina == "👨‍💼 Currículum":
 # FORMACIÓN ACADÉMICA
 # ==========================================
 
-st.header("🎓 Formación Académica")
-
+    st.header("🎓 Formación Académica")
     st.markdown("### Bachiller en Ingeniería Industrial")
     st.write("Universidad Tecnológica del Perú")
     st.write("Egresado 2013")
