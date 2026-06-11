@@ -431,6 +431,27 @@ if archivo:
     with tab4:
         st.subheader("Estadísticos de Tendencia")
         st.table(df.describe().T)
+
+    with tab5:
+        st.subheader("⚠️ Detección Automática de Anomalías")
+        umbral = st.slider("Seleccionar umbral de Z-Score (sensibilidad)", 1.5, 3.5, 3.0)
+        
+        col_outlier = st.selectbox("Seleccionar columna para buscar anomalías", df.select_dtypes(include=np.number).columns)
+        
+        # Cálculo de Z-Score
+        z_scores = np.abs((df[col_outlier] - df[col_outlier].mean()) / df[col_outlier].std())
+        anomalies = df[z_scores > umbral]
+        
+        if not anomalies.empty:
+            st.warning(f"Se detectaron {len(anomalies)} filas fuera del rango estadístico.")
+            st.dataframe(anomalies)
+            # Botón de descarga para los datos filtrados
+            csv = anomalies.to_csv(index=False).encode('utf-8')
+            st.download_button("Descargar Anomalías (CSV)", csv, "anomalias.csv", "text/csv")
+        else:
+            st.success("¡No se detectaron anomalías significativas con este umbral!")
+
+
 else:
     st.info("Cargue un archivo en la barra lateral para inicializar el motor de análisis.")
 
