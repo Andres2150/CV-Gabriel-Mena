@@ -387,8 +387,9 @@ if archivo:
 
         if tipo_graf == "Relación (Plotly)":
             fig = px.scatter(df, x=col_x, y=col_y, color=df.columns[0], template="plotly_dark")
-            st.plotly_chart(fig, use_container_width=True)
-            
+            # Forzamos el uso de SVG para evitar problemas con WebGL
+            st.plotly_chart(fig, use_container_width=True, config={'renderer': 'svg'})
+       
         elif tipo_graf == "Distribución (Seaborn)":
             fig, ax = plt.subplots(figsize=(10, 5))
             sns.histplot(df[col_y], kde=True, color="teal", ax=ax)
