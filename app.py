@@ -156,7 +156,7 @@ Formación orientada a gestión de operaciones, producción,
 costos, mejora continua, calidad y análisis empresarial.
 """)
 
-        st.divider()
+st.divider()
         
         # =====================================================
         # ESPECIALIZACIONES EN DATOS Y ANALÍTICA
