@@ -366,7 +366,9 @@ elif pagina == "📊 4. Análisis Visual":
             "💡 Tab 6: Insights"
         ])
 
-        # --- TAB 1: RESUMEN ---
+        # =================================================
+        # TAB 1: RESUMEN (ACTUALIZADA CON CHECKBOX)
+        # =================================================
         with tab1:
             st.subheader("📋 Estado Estructural del Dataset")
             
@@ -378,10 +380,18 @@ elif pagina == "📊 4. Análisis Visual":
             
             st.divider()
             
+            # --- AGREGADO: Componentes Checkbox para interacción dinámica de datos crudos ---
+            c_check1, c_check2 = st.columns(2)
+            mostrar_crudos = c_check1.checkbox("🔌 Mostrar Muestra de Datos Crudos (Head)")
+            mostrar_desc = c_check2.checkbox("📐 Mostrar Descripción Estadística Detallada")
+            
             col_t1, col_t2 = st.columns(2)
             with col_t1:
-                st.markdown("**Muestra de Registros (Head)**")
-                st.dataframe(df.head(5), use_container_width=True)
+                if mostrar_crudos:
+                    st.markdown("**Muestra de Registros (Head)**")
+                    st.dataframe(df.head(5), use_container_width=True)
+                else:
+                    st.info("💡 Activa el checkbox superior para inspeccionar la muestra de filas (datos crudos).")
             with col_t2:
                 st.markdown("**Metadatos y Tipos de Datos**")
                 meta_df = pd.DataFrame({
@@ -392,14 +402,17 @@ elif pagina == "📊 4. Análisis Visual":
                 st.dataframe(meta_df, use_container_width=True)
                 
             st.divider()
-            st.markdown("**Resumen Estadístico Numérico Descriptivo Completo**")
-            if num_cols:
-                resumen_est = df.describe().T
-                resumen_est["skewness (Asimetría)"] = df.skew(numeric_only=True)
-                st.dataframe(resumen_est, use_container_width=True)
-            else:
-                st.info("Sin variables numéricas para calcular resúmenes descriptivos.")
+            
+            if mostrar_desc:
+                st.markdown("**Resumen Estadístico Numérico Descriptivo Completo**")
+                if num_cols:
+                    resumen_est = df.describe().T
+                    resumen_est["skewness (Asimetría)"] = df.skew(numeric_only=True)
+                    st.dataframe(resumen_est, use_container_width=True)
+                else:
+                    st.info("Sin variables numéricas para calcular resúmenes descriptivos.")
 
+        
         # --- TAB 2: ANÁLISIS UNIVARIADO ---
         with tab2:
             st.subheader("📈 Exploración Individual de Variables")
