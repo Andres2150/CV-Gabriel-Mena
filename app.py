@@ -7,9 +7,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 import re
 
-# =====================================================
 # 1. CONFIGURACIÓN DE LA PÁGINA (Primera instrucción)
-# =====================================================
 st.set_page_config(
     page_title="Gabriel Mena | Portafolio Streamlit",
     page_icon="📊",
@@ -25,33 +23,33 @@ if 'df' not in st.session_state:
 if 'df_original' not in st.session_state:
     st.session_state['df_original'] = None
 
-# =====================================================
+
 # SIDEBAR / NAVEGACIÓN
-# =====================================================
+
 st.sidebar.title("📂 Gabriel Mena López")
 
 pagina = st.sidebar.radio(
     "Seleccione una sección",
     [
-        "🏠 Home",
-        "📂 2. Carga y Perfil",
-        "⚙️ 3. Procesamiento",
-        "📊 4. Análisis Visual"
+        " Home",
+        " 2. Carga y Perfil",
+        " 3. Procesamiento",
+        " 4. Análisis Visual"
     ]
 )
 
 st.sidebar.markdown("---")
 st.sidebar.write("**Gabriel Andrés Mena López**")
 st.sidebar.write("Business Intelligence & Data Analytics")
-st.sidebar.write("📩 gmena50@gmail.com")
-st.sidebar.write("🔗 [LinkedIn](https://www.linkedin.com/in/andresmena1/)")
+st.sidebar.write("gmena50@gmail.com")
+st.sidebar.write("[LinkedIn](https://www.linkedin.com/in/andresmena1/)")
 
 
 # =====================================================
 # SECCIÓN 1: HOME
 # =====================================================
-if pagina == "🏠 Home":
-    st.title("📊 Portafolio Profesional: Data Analytics App")
+if pagina == "Home":
+    st.title("Portafolio Profesional: Data Analytics App")
     
     col1, col2 = st.columns([2, 1])
     
@@ -90,24 +88,24 @@ if pagina == "🏠 Home":
     d1, d2, d3, d4 = st.columns(4)
     
     with d1:
-        st.markdown("📂 **Data 1: AI_Impact_on_Jobs_2030.csv**")
+        st.markdown("**Data 1: AI_Impact_on_Jobs_2030.csv**")
         st.caption("Mercado laboral e impacto de la inteligencia artificial en empleos, salarios, habilidades y demanda futura.")
     with d2:
-        st.markdown("📂 **Data 2: sample_-_superstore.csv**")
+        st.markdown("**Data 2: sample_-_superstore.csv**")
         st.caption("Ventas de una tienda: pedidos, clientes, regiones, categorías, ventas, descuentos y utilidad.")
     with d3:
-        st.markdown("📂 **Data 3: synthetic_ecommerce_order_risk_dataset.csv**")
+        st.markdown("**Data 3: synthetic_ecommerce_order_risk_dataset.csv**")
         st.caption("Pedidos de e-commerce con variables de país, dispositivo, método de pago, valor de orden, entrega, devolución, fraude y etiqueta de riesgo.")
     with d4:
-        st.markdown("📂 **Data 4: Teen_Mental_Health_Dataset.csv**")
+        st.markdown("**Data 4: Teen_Mental_Health_Dataset.csv**")
         st.caption("Hábitos digitales, sueño, actividad física, interacción social y variables de bienestar en adolescentes.")
 
 
 # =====================================================
 # SECCIÓN 2: CARGA Y PERFIL DEL DATASET (CON RE-INICIALIZACIÓN CORREGIDA)
 # =====================================================
-elif pagina == "📂 2. Carga y Perfil":
-    st.title("📂 Módulo 2: Carga y Perfil del Dataset")
+elif pagina == "2. Carga y Perfil":
+    st.title("Módulo 2: Carga y Perfil del Dataset")
     st.write("Permitir cargar el archivo CSV con st.file_uploader() o seleccionar uno de los datasets del proyecto. Mostrar vista previa, dimensiones, columnas, tipos de datos y resumen inicial.")
     
     st.divider()
@@ -157,7 +155,7 @@ elif pagina == "📂 2. Carga y Perfil":
         date_cols = df_actual.select_dtypes(include=['datetime64[ns]']).columns.tolist()
 
         # Métricas rápidas requeridas por la pauta
-        st.subheader("📊 Métricas Rápidas del Dataset")
+        st.subheader("Métricas Rápidas del Dataset")
         m1, m2, m3, m4, m5, m6 = st.columns(6)
         m1.metric("Número de Filas", df_actual.shape[0])
         m2.metric("Número de Columnas", df_actual.shape[1])
@@ -167,14 +165,14 @@ elif pagina == "📂 2. Carga y Perfil":
         m6.metric("Reg. Duplicados", df_actual.duplicated().sum())
 
         # Mostrar alertas si el dataset carece de alguna estructura típica
-        if not num_cols: st.info("ℹ️ El dataset no contiene variables numéricas detectadas.")
-        if not cat_cols: st.info("ℹ️ El dataset no contiene variables categóricas detectadas.")
-        if not date_cols: st.info("ℹ️ El dataset no contiene variables explícitas de tipo fecha.")
+        if not num_cols: st.info("El dataset no contiene variables numéricas detectadas.")
+        if not cat_cols: st.info("El dataset no contiene variables categóricas detectadas.")
+        if not date_cols: st.info("El dataset no contiene variables explícitas de tipo fecha.")
 
         st.divider()
 
         # Selección/Filtro selectivo de columnas mediante multiselect
-        st.subheader("🎯 Selección de Columnas para Análisis")
+        st.subheader("Selección de Columnas para Análisis")
         columnas_filtradas = st.multiselect(
             "Seleccione las columnas que desea conservar para trabajar (Por defecto se muestran todas):",
             options=df_actual.columns.tolist(),
@@ -185,11 +183,11 @@ elif pagina == "📂 2. Carga y Perfil":
             df_actual = df_actual[columnas_filtradas]
             st.session_state['df'] = df_actual
         else:
-            st.warning("⚠️ Debes seleccionar al menos una columna.")
+            st.warning("Debes seleccionar al menos una columna.")
 
         # Mostrar head(), dimensiones, nombres de columnas y tipos de datos
-        st.subheader("👀 Estructura y Vista Previa de los Datos Seleccionados")
-        tab_head, tab_types = st.tabs(["📋 Head (Primeras 10 filas)", "🧬 Columnas y Tipos de Datos"])
+        st.subheader("Estructura y Vista Previa de los Datos Seleccionados")
+        tab_head, tab_types = st.tabs(["Head (Primeras 10 filas)", "🧬 Columnas y Tipos de Datos"])
         
         with tab_head:
             st.dataframe(df_actual.head(10), use_container_width=True)
@@ -205,11 +203,9 @@ elif pagina == "📂 2. Carga y Perfil":
         st.info("A la espera de la carga de un archivo para inicializar el perfilamiento.")
 
 
-# =====================================================
 # SECCIÓN 3: PROCESAMIENTO DE DATOS (FLEXIBLE)
-# =====================================================
-elif pagina == "⚙️ 3. Procesamiento":
-    st.title("⚙️ Módulo 3: Procesamiento de Datos")
+elif pagina == "3. Procesamiento":
+    st.title("Módulo 3: Procesamiento de Datos")
     st.write("Detección flexible y automática según la estructura interna del archivo cargado. Herramientas de ajuste estructural y control de calidad.")
 
     if st.session_state['df'] is not None:
@@ -219,7 +215,7 @@ elif pagina == "⚙️ 3. Procesamiento":
         cat_cols = df.select_dtypes(include=['object', 'category']).columns.tolist()
         date_cols = df.select_dtypes(include=['datetime64[ns]']).columns.tolist()
 
-        st.subheader("🔤 1. Estandarización de Estructura")
+        st.subheader("1. Estandarización de Estructura")
         if st.button("Estandarizar Nombres de Columnas"):
             try:
                 # Reemplazar espacios por guiones bajos, remover caracteres especiales y pasar a minúsculas
@@ -245,7 +241,7 @@ elif pagina == "⚙️ 3. Procesamiento":
 
         st.divider()
 
-        st.subheader("🔍 2. Diagnóstico de Integridad e Imputación")
+        st.subheader("2. Diagnóstico de Integridad e Imputación")
         nulos_conteo = df.isnull().sum()
         nulos_porcentaje = (df.isnull().sum() / len(df)) * 100
         
@@ -257,18 +253,18 @@ elif pagina == "⚙️ 3. Procesamiento":
 
         duplicados_cant = df.duplicated().sum()
         if duplicados_cant > 0:
-            st.warning(f"⚠️ Se detectaron {duplicados_cant} registros exactamente idénticos (duplicados).")
+            st.warning(f"Se detectaron {duplicados_cant} registros exactamente idénticos (duplicados).")
             if st.button("Eliminar registros duplicados automáticamente"):
                 df = df.drop_duplicates()
                 st.session_state['df'] = df
                 st.success("¡Duplicados eliminados!")
                 st.rerun()
         else:
-            st.success("✨ El conjunto de datos no presenta filas duplicadas.")
+            st.success("El conjunto de datos no presenta filas duplicadas.")
 
         st.divider()
 
-        st.subheader("📈 3. Análisis de Outliers (Método IQR)")
+        st.subheader("3. Análisis de Outliers (Método IQR)")
         if num_cols:
             col_outlier_analisis = st.selectbox("Seleccione columna numérica para calcular Outliers:", num_cols)
             try:
@@ -294,10 +290,10 @@ elif pagina == "⚙️ 3. Procesamiento":
 
         st.divider()
 
-        st.subheader("🎛️ 4. Configuración de Filtros Dinámicos de Trabajo")
+        st.subheader("4. Configuración de Filtros Dinámicos de Trabajo")
         st.info("Los filtros configurados aquí afectarán de manera transversal a la visualización de la sección final.")
         
-        st.sidebar.markdown("### 🛠️ Filtros Dinámicos")
+        st.sidebar.markdown("###Filtros Dinámicos")
         df_filtrado = df.copy()
 
         if num_cols:
@@ -326,24 +322,22 @@ elif pagina == "⚙️ 3. Procesamiento":
                 if len(rango_fecha) == 2:
                     df_filtrado = df_filtrado[(df_filtrado[col_f_fec].dt.date >= rango_fecha[0]) & (df_filtrado[col_f_fec].dt.date <= rango_fecha[1])]
 
-        if st.sidebar.button("💾 Guardar y Aplicar Filtros"):
+        if st.sidebar.button("Guardar y Aplicar Filtros"):
             st.session_state['df'] = df_filtrado
             st.success(f"¡Filtros aplicados! {df_filtrado.shape[0]} filas resultantes.")
             st.rerun()
 
-        if st.button("🔄 Restablecer Dataset Original sin Filtros"):
+        if st.button("Restablecer Dataset Original sin Filtros"):
             st.session_state['df'] = st.session_state['df_original'].copy()
             st.success("Se han eliminado todas las modificaciones y filtros.")
             st.rerun()
     else:
         st.error("No hay datos cargados en la sesión. Diríjase al Módulo 2 para inicializar.")
 
-
-# =====================================================
 # SECCIÓN 4: ANÁLISIS VISUAL OBLIGATORIO (6 TABS REQUERIDOS)
-# =====================================================
-elif pagina == "📊 4. Análisis Visual":
-    st.title("📊 Módulo 4: Análisis Visual Obligatorio")
+
+elif pagina == "4. Análisis Visual":
+    st.title("Módulo 4: Análisis Visual Obligatorio")
     st.write("Ecosistema modular de visualizaciones interactivas avanzado para la exploración analítica completa.")
     st.divider()
 
@@ -358,19 +352,17 @@ elif pagina == "📊 4. Análisis Visual":
 
         # Estructuración obligatoria mediante 6 st.tabs()
         tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([
-            "📊 Tab 1: Resumen",
-            "📈 Tab 2: Análisis Univariado",
-            "♊ Tab 3: Análisis Bivariado",
-            "💠 Tab 4: Análisis Multivariado",
-            "⏳ Tab 5: Análisis Temporal",
-            "💡 Tab 6: Insights"
+            "Tab 1: Resumen",
+            "Tab 2: Análisis Univariado",
+            "Tab 3: Análisis Bivariado",
+            "Tab 4: Análisis Multivariado",
+            "Tab 5: Análisis Temporal",
+            "Tab 6: Insights"
         ])
 
-        # =================================================
         # TAB 1: RESUMEN (ACTUALIZADA CON CHECKBOX)
-        # =================================================
         with tab1:
-            st.subheader("📋 Estado Estructural del Dataset")
+            st.subheader("Estado Estructural del Dataset")
             
             c1, col_m1, col_m2, col_m3 = st.columns([1, 1, 1, 1])
             with c1: st.metric("Dimensión del Dataframe", f"{df.shape[0]} x {df.shape[1]}")
@@ -382,8 +374,8 @@ elif pagina == "📊 4. Análisis Visual":
             
             # --- AGREGADO: Componentes Checkbox para interacción dinámica de datos crudos ---
             c_check1, c_check2 = st.columns(2)
-            mostrar_crudos = c_check1.checkbox("🔌 Mostrar Muestra de Datos Crudos (Head)")
-            mostrar_desc = c_check2.checkbox("📐 Mostrar Descripción Estadística Detallada")
+            mostrar_crudos = c_check1.checkbox("Mostrar Muestra de Datos Crudos (Head)")
+            mostrar_desc = c_check2.checkbox("Mostrar Descripción Estadística Detallada")
             
             col_t1, col_t2 = st.columns(2)
             with col_t1:
@@ -391,7 +383,7 @@ elif pagina == "📊 4. Análisis Visual":
                     st.markdown("**Muestra de Registros (Head)**")
                     st.dataframe(df.head(5), use_container_width=True)
                 else:
-                    st.info("💡 Activa el checkbox superior para inspeccionar la muestra de filas (datos crudos).")
+                    st.info("Activa el checkbox superior para inspeccionar la muestra de filas (datos crudos).")
             with col_t2:
                 st.markdown("**Metadatos y Tipos de Datos**")
                 meta_df = pd.DataFrame({
@@ -415,7 +407,7 @@ elif pagina == "📊 4. Análisis Visual":
         
         # --- TAB 2: ANÁLISIS UNIVARIADO ---
         with tab2:
-            st.subheader("📈 Exploración Individual de Variables")
+            st.subheader("Exploración Individual de Variables")
             opcion_uni = st.radio("Tipo de variable a inspeccionar:", ["Numéricas", "Categóricas / Binarias"], horizontal=True, key="op_uni")
             
             if opcion_uni == "Numéricas" and num_cols:
@@ -448,7 +440,7 @@ elif pagina == "📊 4. Análisis Visual":
 
         # --- TAB 3: ANÁLISIS BIVARIADO (PARCHE SEGURO SIN TENDENCIA EXT.) ---
         with tab3:
-            st.subheader("♊ Comparación e Interacción de Variables")
+            st.subheader("Comparación e Interacción de Variables")
             tipo_bivariado = st.selectbox("Seleccione el enfoque del análisis bivariado:", [
                 "Numérica vs Numérica (Scatter Plot)",
                 "Numérica por Categoría (Boxplot Comparativo)",
@@ -490,7 +482,7 @@ elif pagina == "📊 4. Análisis Visual":
 
         # --- TAB 4: ANÁLISIS MULTIVARIADO ---
         with tab4:
-            st.subheader("💠 Análisis Multidimensional y Correlaciones Estructuradas")
+            st.subheader("Análisis Multidimensional y Correlaciones Estructuradas")
             col_m1, col_m2 = st.columns([1, 2])
             
             with col_m1:
@@ -520,7 +512,7 @@ elif pagina == "📊 4. Análisis Visual":
 
         # --- TAB 5: ANÁLISIS TEMPORAL ---
         with tab5:
-            st.subheader("⏳ Análisis Evolutivo y Tendencias en el Tiempo")
+            st.subheader("Análisis Evolutivo y Tendencias en el Tiempo")
             potenciales_fechas = date_cols + [c for c in df.columns if any(k in c.lower() for k in ['date', 'fecha', 'year', 'año']) if c not in date_cols]
             
             if potenciales_fechas and num_cols:
@@ -550,11 +542,11 @@ elif pagina == "📊 4. Análisis Visual":
 
         # --- TAB 6: INSIGHTS (PARCHE SEGURO DE LA DIAGONAL NUMPY) ---
         with tab6:
-            st.subheader("💡 Resumen de Hallazgos Clave e Inteligencia de Negocio")
+            st.subheader("Resumen de Hallazgos Clave e Inteligencia de Negocio")
             st.write("Interpretación algorítmica y patrones de datos extraídos directamente del comportamiento de las variables activas:")
             
             if num_cols:
-                st.markdown("### 📊 Patrones en Variables Métricas")
+                st.markdown("### Patrones en Variables Métricas")
                 for col in num_cols[:2]:
                     col_mean = df[col].mean()
                     col_std = df[col].std()
@@ -567,7 +559,7 @@ elif pagina == "📊 4. Análisis Visual":
                     st.info(f"**Variable '{col}':** Presenta un promedio de `{col_mean:.2f}` con un rango de oscilación que va desde `{col_min:.2f}` hasta `{col_max:.2f}`. El coeficiente de variación indica un estado de: **{grado_dispersion}**.")
             
             if len(num_cols) >= 2:
-                st.markdown("### 🔗 Correlaciones e Interdependencia")
+                st.markdown("### Correlaciones e Interdependencia")
                 try:
                     c_matrix = df[num_cols].corr().abs()
                     
@@ -581,7 +573,7 @@ elif pagina == "📊 4. Análisis Visual":
                         max_corr_val = c_matrix_clean.max().max()
                         v1 = c_matrix_clean.max().idxmax()
                         v2 = c_matrix_clean[v1].idxmax()
-                        st.success(f"🔍 **Patrón de Asociación Detectado:** Las variables **{v1}** y **{v2}** muestran la mayor fuerza de asociación lineal en el dataset actual con una correlación de `{max_corr_val:.2f}`. Cualquier cambio operativo o comercial en una de ellas repercutirá directamente en el comportamiento de la otra.")
+                        st.success(f" **Patrón de Asociación Detectado:** Las variables **{v1}** y **{v2}** muestran la mayor fuerza de asociación lineal en el dataset actual con una correlación de `{max_corr_val:.2f}`. Cualquier cambio operativo o comercial en una de ellas repercutirá directamente en el comportamiento de la otra.")
                 except Exception as e:
                     st.info("No se pudo automatizar el cálculo asociativo. Puedes revisar el mapa completo en la Tab 4.")
             
