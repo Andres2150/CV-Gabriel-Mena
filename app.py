@@ -110,7 +110,6 @@ elif pagina == "📂 2. Carga y Perfil":
     opcion_carga = st.radio("Seleccione el origen del archivo:", ["Subir mi propio CSV", "Seleccionar un Dataset del Proyecto"], horizontal=True)
     df_cargado = None
 
-    # Usar st.file_uploader() para cargar archivos .csv
     if opcion_carga == "Subir mi propio CSV":
         archivo = st.file_uploader("Cargar dataset (.csv)", type=["csv"])
         if archivo:
@@ -130,9 +129,7 @@ elif pagina == "📂 2. Carga y Perfil":
         except Exception:
             st.warning(f"Archivo '{dataset_selec}' no encontrado localmente. Por favor, sube tu propio archivo usando la opción 'Subir mi propio CSV'.")
 
-    # Validar obligatoriamente que el archivo fue cargado antes de ejecutar análisis
     if df_cargado is not None:
-        # Se guarda tanto el original como el de trabajo en st.session_state para persistencia entre navegación
         st.session_state['df_original'] = df_cargado.copy()
         if st.session_state['df'] is None:
             st.session_state['df'] = df_cargado.copy()
@@ -140,12 +137,11 @@ elif pagina == "📂 2. Carga y Perfil":
         df_actual = st.session_state['df']
         st.success("¡Dataset inicializado y guardado en memoria de sesión!")
 
-        # Identificación de tipos de columnas mediante funciones controladas
+        # Clasificación de variables
         num_cols = df_actual.select_dtypes(include=[np.number]).columns.tolist()
         cat_cols = df_actual.select_dtypes(include=['object', 'category']).columns.tolist()
         date_cols = df_actual.select_dtypes(include=['datetime64[ns]']).columns.tolist()
 
-        # Incluir métricas rápidas requeridas en el módulo
         st.subheader("📊 Métricas Rápidas del Dataset")
         m1, m2, m3, m4, m5, m6 = st.columns(6)
         m1.metric("Número de Filas", df_actual.shape[0])
@@ -155,14 +151,12 @@ elif pagina == "📂 2. Carga y Perfil":
         m5.metric("Valores Nulos", df_actual.isnull().sum().sum())
         m6.metric("Reg. Duplicados", df_actual.duplicated().sum())
 
-        # Mostrar mensajes claros si el dataset carece de algún tipo de variable
         if not num_cols: st.info("ℹ️ El dataset no contiene variables numéricas detectadas.")
         if not cat_cols: st.info("ℹ️ El dataset no contiene variables categóricas detectadas.")
         if not date_cols: st.info("ℹ️ El dataset no contiene variables explícitas de tipo fecha.")
 
         st.divider()
 
-        # Permitir seleccionar columnas relevantes mediante selectbox o multiselect
         st.subheader("🎯 Selección de Columnas para Análisis")
         columnas_filtradas = st.multiselect(
             "Seleccione las columnas que desea conservar para trabajar (Por defecto se muestran todas):",
@@ -176,7 +170,6 @@ elif pagina == "📂 2. Carga y Perfil":
         else:
             st.warning("⚠️ Debes seleccionar al menos una columna.")
 
-        # Mostrar head(), dimensiones, nombres de columnas y tipos de datos
         st.subheader("👀 Estructura y Vista Previa de los Datos Seleccionados")
         tab_head, tab_types = st.tabs(["📋 Head (Primeras 10 filas)", "🧬 Columnas y Tipos de Datos"])
         
@@ -204,25 +197,21 @@ elif pagina == "⚙️ 3. Procesamiento":
     if st.session_state['df'] is not None:
         df = st.session_state['df']
 
-        # Detección automática y flexible de tipos de variables usando funciones nativas limpias
         num_cols = df.select_dtypes(include=[np.number]).columns.tolist()
         cat_cols = df.select_dtypes(include=['object', 'category']).columns.tolist()
         date_cols = df.select_dtypes(include=['datetime64[ns]']).columns.tolist()
 
-        # 1. Herramienta: Estandarizar nombres de columnas si es necesario
         st.subheader("🔤 1. Estandarización de Estructura")
         if st.button("Estandarizar Nombres de Columnas"):
             try:
-                # Reemplaza espacios por guiones bajos, remueve caracteres especiales y convierte a minúsculas
                 nuevos_nombres = {col: re.sub(r'[^a-zA-Z0-9_]', '', col.replace(' ', '_')).lower() for col in df.columns}
                 df = df.rename(columns=nuevos_nombres)
                 st.session_state['df'] = df
-                st.success("¡Columnas estandarizadas! (Ej: 'Ventas Totales (%)' -> 'ventas_totales')")
+                st.success("¡Columnas estandarizadas con éxito!")
                 st.rerun()
             except Exception as e:
                 st.error(f"No se pudieron estandarizar las columnas de forma automática: {e}")
 
-        # 2. Herramienta: Convertir columnas de fecha cuando existan
         if cat_cols:
             col_a_fecha = st.selectbox("Convertir columna categórica/texto a Tipo Fecha:", ["Ninguna"] + cat_cols)
             if col_a_fecha != "Ninguna":
@@ -237,7 +226,6 @@ elif pagina == "⚙️ 3. Procesamiento":
 
         st.divider()
 
-        # 3. Herramienta: Calcular valores faltantes por columna y porcentaje de nulos
         st.subheader("🔍 2. Diagnóstico de Integridad e Imputación")
         nulos_conteo = df.isnull().sum()
         nulos_porcentaje = (df.isnull().sum() / len(df)) * 100
@@ -248,7 +236,6 @@ elif pagina == "⚙️ 3. Procesamiento":
         })
         st.dataframe(reporte_nulos, use_container_width=True)
 
-        # Detectar duplicados y reportar su cantidad
         duplicados_cant = df.duplicated().sum()
         if duplicados_cant > 0:
             st.warning(f"⚠️ Se detectaron {duplicados_cant} registros exactamente idénticos (duplicados).")
@@ -262,7 +249,6 @@ elif pagina == "⚙️ 3. Procesamiento":
 
         st.divider()
 
-        # 4. Herramienta: Identificar outliers en variables numéricas usando IQR
         st.subheader("📈 3. Análisis de Outliers (Método IQR)")
         if num_cols:
             col_outlier_analisis = st.selectbox("Seleccione columna numérica para calcular Outliers:", num_cols)
@@ -289,15 +275,12 @@ elif pagina == "⚙️ 3. Procesamiento":
 
         st.divider()
 
-        # 5. Herramienta: Permitir filtros dinámicos por categorías, rangos numéricos o fechas en el Sidebar
         st.subheader("🎛️ 4. Configuración de Filtros Dinámicos de Trabajo")
-        st.info("Los filtros configurados aquí afectarán la data que se visualiza e interpreta en el siguiente módulo de Análisis Visual.")
+        st.info("Los filtros configurados aquí afectarán de manera transversal a la visualización de la sección final.")
         
-        # Guardamos filtros en la barra lateral de forma dinámica según disponibilidad
         st.sidebar.markdown("### 🛠️ Filtros Dinámicos")
         df_filtrado = df.copy()
 
-        # Filtro numérico si aplica
         if num_cols:
             col_f_num = st.sidebar.selectbox("Filtrar Rango Numérico:", ["Ninguno"] + num_cols)
             if col_f_num != "Ninguno":
@@ -307,7 +290,6 @@ elif pagina == "⚙️ 3. Procesamiento":
                     rango = st.sidebar.slider(f"Rango de {col_f_num}", min_val, max_val, (min_val, max_val))
                     df_filtrado = df_filtrado[(df_filtrado[col_f_num] >= rango[0]) & (df_filtrado[col_f_num] <= rango[1])]
 
-        # Filtro categórico si aplica
         if cat_cols:
             col_f_cat = st.sidebar.selectbox("Filtrar por Categoría:", ["Ninguno"] + cat_cols)
             if col_f_cat != "Ninguno":
@@ -316,7 +298,7 @@ elif pagina == "⚙️ 3. Procesamiento":
                 if seleccion_cat:
                     df_filtrado = df_filtrado[df_filtrado[col_f_cat].isin(seleccion_cat)]
 
-        # Filtro de fechas si aplica
+        # Filtro de fechas dinámico si la columna es datetime real
         if date_cols:
             col_f_fec = st.sidebar.selectbox("Filtrar por Rango Temporal:", ["Ninguno"] + date_cols)
             if col_f_fec != "Ninguno":
@@ -328,179 +310,272 @@ elif pagina == "⚙️ 3. Procesamiento":
 
         if st.sidebar.button("💾 Guardar y Aplicar Filtros"):
             st.session_state['df'] = df_filtrado
-            st.success(f"¡Filtros aplicados! El dataset se redujo a {df_filtrado.shape[0]} filas.")
+            st.success(f"¡Filtros aplicados! {df_filtrado.shape[0]} filas resultantes.")
             st.rerun()
 
         if st.button("🔄 Restablecer Dataset Original sin Filtros"):
             st.session_state['df'] = st.session_state['df_original'].copy()
             st.success("Se han eliminado todas las modificaciones y filtros.")
             st.rerun()
-
     else:
         st.error("No hay datos cargados en la sesión. Diríjase al Módulo 2 para inicializar.")
 
 
 # =====================================================
-# SECCIÓN 4: ANÁLISIS VISUAL
+# SECCIÓN 4: ANÁLISIS VISUAL OBLIGATORIO (RECONFIGURADO)
 # =====================================================
 elif pagina == "📊 4. Análisis Visual":
-    st.title("🚀 Advanced Analytics Dashboard")
-    st.write("Sección ANALIZA TU DATA organizada dinámicamente mediante pestañas.")
-    
+    st.title("📊 Módulo 4: Análisis Visual Obligatorio")
+    st.write("Ecosistema modular de visualizaciones interactivas avanzado para la exploración analítica completa.")
     st.divider()
 
     if st.session_state['df'] is not None:
         df = st.session_state['df']
         
+        # Clasificación interna automática de variables
         num_cols = df.select_dtypes(include=[np.number]).columns.tolist()
         cat_cols = df.select_dtypes(include=['object', 'category']).columns.tolist()
+        date_cols = df.select_dtypes(include=['datetime64[ns]']).columns.tolist()
+        
+        # Detección explícita de variables Binarias (solo dos valores únicos)
+        bin_cols = [col for col in df.columns if df[col].dropna().nunique() == 2]
 
-        tab1, tab2, tab3, tab4, tab5 = st.tabs([
-            "📊 Exploración",
-            "🔍 Calidad de Datos",
-            "📉 Visualización Avanzada",
-            "🤖 Análisis Estadístico",
-            "⚠️ Detección de Anomalías",
+        # Estructuración obligatoria mediante 6 st.tabs()
+        tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([
+            "📊 Tab 1: Resumen",
+            "📈 Tab 2: Análisis Univariado",
+            "♊ Tab 3: Análisis Bivariado",
+            "💠 Tab 4: Análisis Multivariado",
+            "⏳ Tab 5: Análisis Temporal",
+            "💡 Tab 6: Insights"
         ])
 
-        # --- TAB 1: EXPLORACIÓN ---
+        # =================================================
+        # TAB 1: RESUMEN
+        # =================================================
         with tab1:
-            st.subheader("Vista Previa del Dataset Filtrado")
-            st.dataframe(df.head(10), use_container_width=True)
-            st.write(f"Dimensiones de trabajo actuales: {df.shape[0]} filas, {df.shape[1]} columnas")
-
-        # --- TAB 2: CALIDAD DE DATOS ---
-        with tab2:
-            st.subheader("🔍 Auditoría de Calidad de Datos")
-
-            col1, col2, col3 = st.columns(3)
-            col1.metric("Total Filas", df.shape[0])
-            col2.metric("Total Columnas", df.shape[1])
-            duplicados = df.duplicated().sum()
-            col3.metric(
-                "Filas Duplicadas",
-                duplicados,
-                delta_color="inverse" if duplicados > 0 else "normal",
-            )
-
-            st.divider()
-
-            st.subheader("Diagnóstico de Nulos")
-            nulos_por_col = df.isnull().sum()
-            nulos_activos = nulos_por_col[nulos_por_col > 0]
-
-            if not nulos_activos.empty:
-                st.warning(f"Se encontraron valores nulos en {len(nulos_activos)} columnas.")
-                st.bar_chart(nulos_activos)
-            else:
-                st.success("¡Integridad de datos: Sin valores nulos detectados!")
-                datos_cero = pd.DataFrame({"Nulos": 0}, index=df.columns)
-                st.bar_chart(datos_cero)
-
-        # --- TAB 3: VISUALIZACIÓN AVANZADA ---
-        with tab3:
-            st.subheader("Suite de Visualización")
-            tipo_graf = st.radio(
-                "Seleccionar tipo de gráfico",
-                [
-                    "Relación (Plotly)",
-                    "Distribución (Seaborn)",
-                    "Correlación (Heatmap)",
-                    "Boxplot (Outliers)",
-                    "Densidad (Skew/Kurt)",
-                ],
-                horizontal=True,
-                key="tipo_graf_suite"
-            )
-
-            c1, c2 = st.columns(2)
+            st.subheader("📋 Estado Estructural del Dataset")
+            
+            c1, col_m1, col_m2, col_m3 = st.columns([1, 1, 1, 1])
             with c1:
-                col_x = st.selectbox("Eje X", df.columns, key="v_suite_x")
-            with c2:
-                default_idx = 1 if len(num_cols) > 1 else 0
-                col_y = st.selectbox("Eje Y (Numérico)", num_cols, index=default_idx, key="v_suite_y")
-
-            if tipo_graf == "Relación (Plotly)":
-                if col_x == col_y:
-                    st.warning("⚠️ Selecciona columnas diferentes para el Eje X y el Eje Y para evitar conflictos.")
-                else:
-                    fig = px.scatter(df, x=col_x, y=col_y, color=df.columns[0], template="plotly_white")
-                    st.plotly_chart(fig, use_container_width=True)
-
-            elif tipo_graf == "Distribución (Seaborn)":
-                if num_cols:
-                    fig, ax = plt.subplots(figsize=(10, 5))
-                    sns.histplot(df[col_y], kde=True, color="teal", ax=ax)
-                    st.pyplot(fig)
-                else:
-                    st.warning("No hay columnas numéricas para graficar distribuciones.")
-
-            elif tipo_graf == "Correlación (Heatmap)":
-                if len(num_cols) >= 2:
-                    corr = df[num_cols].corr()
-                    mask = np.triu(np.ones_like(corr, dtype=bool))
-                    fig, ax = plt.subplots(figsize=(10, 8))
-                    sns.heatmap(corr, mask=mask, annot=True, cmap="coolwarm", fmt=".2f", ax=ax, square=True)
-                    st.pyplot(fig)
-                else:
-                    st.warning("Se necesitan al menos 2 variables numéricas para correlaciones.")
-
-            elif tipo_graf == "Boxplot (Outliers)":
-                if num_cols:
-                    fig = px.box(df, y=col_y, title=f"Outliers: {col_y}", template="plotly_white")
-                    st.plotly_chart(fig, use_container_width=True)
-                else:
-                    st.warning("Requiere columnas numéricas.")
-
-            elif tipo_graf == "Densidad (Skew/Kurt)":
-                if num_cols:
-                    from scipy.stats import shapiro
-                    skew = df[col_y].skew()
-                    kurt = df[col_y].kurt()
-                    
-                    df_clean = df[col_y].dropna()
-                    if len(df_clean) > 5000:
-                        df_clean = df_clean.sample(5000, random_state=42)
-                    
-                    if len(df_clean) >= 3:
-                        stat, p = shapiro(df_clean)
-                        p_val_str = f"{p:.4f}"
-                    else:
-                        p_val_str = "Insuficientes datos"
-
-                    fig, ax = plt.subplots(figsize=(10, 4))
-                    sns.kdeplot(df[col_y], fill=True, color="purple", ax=ax)
-                    ax.set_title(f"Normalidad: P-value {p_val_str} | Skew: {skew:.2f} | Kurt: {kurt:.2f}")
-                    st.pyplot(fig)
-
-        # --- TAB 4: ANÁLISIS ESTADÍSTICO ---
-        with tab4:
-            st.subheader("Resumen Estadístico Profundo")
+                st.metric("Dimensión del Dataframe", f"{df.shape[0]} x {df.shape[1]}")
+            with col_m1:
+                st.metric("Variables Binarias", len(bin_cols))
+            with col_m2:
+                st.metric("Total de Nulos", df.isnull().sum().sum())
+            with col_m3:
+                st.metric("Filas Duplicadas", df.duplicated().sum())
+            
+            st.divider()
+            
+            col_t1, col_t2 = st.columns(2)
+            with col_t1:
+                st.markdown("**Muestra de Registros (Head)**")
+                st.dataframe(df.head(5), use_container_width=True)
+            with col_t2:
+                st.markdown("**Metadatos y Tipos de Datos**")
+                meta_df = pd.DataFrame({
+                    "Tipo de columna": [str(t) for t in df.dtypes],
+                    "Nulos totales": df.isnull().sum().values,
+                    "¿Es Binaria?": ["Sí" if c in bin_cols else "No" for c in df.columns]
+                }, index=df.columns)
+                st.dataframe(meta_df, use_container_width=True)
+                
+            st.divider()
+            st.markdown("**Resumen Estadístico Numérico Descriptivo Completo**")
             if num_cols:
-                resumen = df.describe().T
-                resumen["skew"] = df.skew(numeric_only=True)
-                resumen["kurt"] = df.kurt(numeric_only=True)
-                st.dataframe(resumen, use_container_width=True)
+                resumen_est = df.describe().T
+                resumen_est["skewness (Asimetría)"] = df.skew(numeric_only=True)
+                st.dataframe(resumen_est, use_container_width=True)
             else:
-                st.info("No hay columnas numéricas para extraer un resumen descriptivo profundo.")
+                st.info("Sin variables numéricas para calcular resúmenes descriptivos.")
 
-        # --- TAB 5: DETECCIÓN DE ANOMALÍAS ---
-        with tab5:
-            st.subheader("⚠️ Detección Automática de Anomalías")
-            umbral = st.slider("Seleccionar umbral de Z-Score", 1.5, 3.5, 3.0, key="sensibilidad_z")
-            col_outlier = st.selectbox("Seleccionar columna para buscar anomalías", num_cols, key="outlier_target")
+        # =================================================
+        # TAB 2: ANÁLISIS UNIVARIADO
+        # =================================================
+        with tab2:
+            st.subheader("📈 Exploración Individual de Variables")
+            
+            opcion_uni = st.radio("Tipo de variable a inspeccionar:", ["Numéricas", "Categóricas / Binarias"], horizontal=True, key="op_uni")
+            
+            if opcion_uni == "Numéricas" and num_cols:
+                col_sel_u = st.selectbox("Seleccione Variable Numérica:", num_cols, key="sb_uni_num")
+                
+                col_g1, col_g2 = st.columns(2)
+                with col_g1:
+                    fig_hist = px.histogram(df, x=col_sel_u, title=f"Histograma de Distribución: {col_sel_u}", color_discrete_sequence=["#1f77b4"])
+                    st.plotly_chart(fig_hist, use_container_width=True)
+                with col_g2:
+                    fig_box = px.box(df, y=col_sel_u, title=f"Diagrama de Caja (Boxplot) & Outliers: {col_sel_u}", color_discrete_sequence=["#2ca02c"])
+                    st.plotly_chart(fig_box, use_container_width=True)
+                    
+            elif opcion_uni == "Categóricas / Binarias" and cat_cols:
+                col_sel_c = st.selectbox("Seleccione Variable Categórica:", cat_cols, key="sb_uni_cat")
+                
+                conteo_cats = df[col_sel_c].value_counts().reset_index()
+                conteo_cats.columns = [col_sel_c, 'Conteo']
+                conteo_cats['Proporción (%)'] = ((conteo_cats['Conteo'] / len(df)) * 100).round(2)
+                
+                col_gc1, col_gc2 = st.columns(2)
+                with col_gc1:
+                    st.markdown(f"**Distribución de frecuencias para {col_sel_c}**")
+                    st.dataframe(conteo_cats, use_container_width=True)
+                with col_gc2:
+                    fig_bar = px.bar(conteo_cats, x=col_sel_c, y='Conteo', text='Proporción (%)', title=f"Frecuencias de {col_sel_c}", color=col_sel_c)
+                    st.plotly_chart(fig_bar, use_container_width=True)
+            else:
+                st.warning("No existen variables aptas en esta categoría para mapear la distribución.")
 
-            if col_outlier:
-                if df[col_outlier].std() == 0:
-                    st.error("No es posible calcular anomalías en una columna con desviación estándar de cero.")
+        # =================================================
+        # TAB 3: ANÁLISIS BIVARIADO
+        # =================================================
+        with tab3:
+            st.subheader("♊ Comparación e Interacción de Variables")
+            
+            tipo_bivariado = st.selectbox("Seleccione el enfoque del análisis bivariado:", [
+                "Numérica vs Numérica (Scatter Plot)",
+                "Numérica por Categoría (Boxplot Comparativo)",
+                "Categórica vs Categórica (Barras Agrupadas)"
+            ])
+            
+            if tipo_bivariado == "Numérica vs Numérica (Scatter Plot)" and len(num_cols) >= 1:
+                c_bx1, c_bx2 = st.columns(2)
+                with c_bx1: bx_x = st.selectbox("Variable Eje X (Numérica):", num_cols, key="bx_x")
+                with c_bx2: 
+                    b_idx = 1 if len(num_cols) > 1 else 0
+                    bx_y = st.selectbox("Variable Eje Y (Numérica):", num_cols, index=b_idx, key="bx_y")
+                
+                if bx_x == bx_y:
+                    st.warning("Por favor, seleccione variables distintas en cada eje.")
                 else:
-                    z_scores = np.abs((df[col_outlier] - df[col_outlier].mean()) / df[col_outlier].std())
-                    anomalies = df[z_scores > umbral]
+                    fig_scat = px.scatter(df, x=bx_x, y=bx_y, trendline="ols", title=f"Dispersión e Interacción: {bx_x} vs {bx_y}", template="plotly_white")
+                    st.plotly_chart(fig_scat, use_container_width=True)
+                    
+            elif tipo_bivariado == "Numérica por Categoría (Boxplot Comparativo)" and num_cols and cat_cols:
+                c_bxc1, c_bxc2 = st.columns(2)
+                with c_bxc1: box_cat = st.selectbox("Variable Categórica (Agrupador):", cat_cols, key="box_cat")
+                with c_bxc2: box_num = st.selectbox("Variable Numérica (Métrica):", num_cols, key="box_num")
+                
+                fig_box_comp = px.box(df, x=box_cat, y=box_num, color=box_cat, title=f"Distribución de {box_num} según {box_cat}")
+                st.plotly_chart(fig_box_comp, use_container_width=True)
+                
+            elif tipo_bivariado == "Categórica vs Categórica (Barras Agrupadas)" and len(cat_cols) >= 2:
+                c_bg1, c_bg2 = st.columns(2)
+                with c_bg1: bar_c1 = st.selectbox("Categoría Principal (Eje X):", cat_cols, key="bar_c1")
+                with c_bg2: bar_c2 = st.selectbox("Categoría de Cruce (Color):", cat_cols, index=1 if len(cat_cols)>1 else 0, key="bar_c2")
+                
+                df_cross = df.groupby([bar_c1, bar_c2]).size().reset_index(name='Conteo')
+                fig_grouped_bar = px.bar(df_cross, x=bar_c1, y='Conteo', color=bar_c2, barmode="group", title=f"Cruce de frecuencias: {bar_c1} vs {bar_c2}")
+                st.plotly_chart(fig_grouped_bar, use_container_width=True)
+            else:
+                st.warning("No se cuenta con la combinación requerida de variables en el archivo actual.")
 
-                    if not anomalies.empty:
-                        st.warning(f"Se detectaron {len(anomalies)} filas fuera del rango estadístico.")
-                        st.dataframe(anomalies, use_container_width=True)
+        # =================================================
+        # TAB 4: ANÁLISIS MULTIVARIADO
+        # =================================================
+        with tab4:
+            st.subheader("💠 Análisis Multidimensional y Correlaciones Estructuradas")
+            
+            col_m1, col_m2 = st.columns([1, 2])
+            
+            with col_m1:
+                st.markdown("**Matriz de Correlación Lineal**")
+                if len(num_cols) >= 2:
+                    corr_mat = df[num_cols].corr()
+                    mask = np.triu(np.ones_like(corr_mat, dtype=bool))
+                    
+                    fig_hm, ax_hm = plt.subplots(figsize=(6, 5))
+                    sns.heatmap(corr_mat, mask=mask, annot=True, cmap="coolwarm", fmt=".2f", ax=ax_hm, cbar=True, square=True)
+                    st.pyplot(fig_hm)
+                else:
+                    st.info("Se necesitan al menos dos variables numéricas en el dataset para estructurar el Heatmap de correlación.")
+                    
+            with col_m2:
+                st.markdown("**Análisis combinado de tres variables (Segmentación Completa)**")
+                if len(num_cols) >= 2 and cat_cols:
+                    mx = st.selectbox("Eje X (Numérico):", num_cols, key="mx")
+                    my = st.selectbox("Eje Y (Numérico):", num_cols, index=1 if len(num_cols)>1 else 0, key="my")
+                    m_color = st.selectbox("Segmentación por Categoría (Color):", cat_cols, key="m_color")
+                    
+                    if mx != my:
+                        fig_multi_scat = px.scatter(df, x=mx, y=my, color=m_color, title=f"Gráfico Multivariado: {mx} vs {my} por {m_color}", template="plotly_white")
+                        st.plotly_chart(fig_multi_scat, use_container_width=True)
+                else:
+                    st.info("Insuficientes variables numéricas o categóricas para habilitar el gráfico de dispersión tri-variable.")
+
+        # =================================================
+        # TAB 5: ANÁLISIS TEMPORAL
+        # =================================================
+        with tab5:
+            st.subheader("⏳ Análisis Evolutivo y Tendencias en el Tiempo")
+            
+            # Unir columnas de fecha explícitas detectadas y las que tengan indicios en el nombre
+            potenciales_fechas = date_cols + [c for c in df.columns if any(k in c.lower() for k in ['date', 'fecha', 'year', 'año']) if c not in date_cols]
+            
+            if potenciales_fechas and num_cols:
+                c_t1, c_t2 = st.columns(2)
+                with c_t1: date_target = st.selectbox("Seleccione la Variable Temporal/Fecha:", potenciales_fechas, key="dt_t")
+                with c_t2: metric_target = st.selectbox("Seleccione la Métrica a Evaluar:", num_cols, key="mt_t")
+                
+                df_t = df.copy()
+                df_t[date_target] = pd.to_datetime(df_t[date_target], errors='coerce')
+                df_t = df_t.dropna(subset=[date_target]).sort_values(date_target)
+                
+                if not df_t.empty:
+                    # Permitir agrupación dinámica opcional por checkbox
+                    agrupar_por_mes = st.checkbox("Agrupar métrica promediada por Mes/Año para suavizar tendencia")
+                    
+                    if agrupar_por_mes:
+                        df_t['Periodo'] = df_t[date_target].dt.to_period('M').astype(str)
+                        df_g_temp = df_t.groupby('Periodo')[metric_target].mean().reset_index()
+                        fig_line_t = px.line(df_g_temp, x='Periodo', y=metric_target, title=f"Evolución Mensual Promedio de {metric_target}", markers=True)
                     else:
-                        st.success("¡No se detectaron anomalías significativas con este umbral!")
+                        fig_line_t = px.line(df_t, x=date_target, y=metric_target, title=f"Evolución Histórica Detallada de {metric_target}")
+                    
+                    st.plotly_chart(fig_line_t, use_container_width=True)
+                else:
+                    st.error("No se hallaron registros temporales válidos que puedan ser procesados secuencialmente.")
+            else:
+                st.info("Se requiere una columna formateada como fecha o año en conjunto con variables numéricas para trazar la pestaña temporal.")
+
+        # =================================================
+        # TAB 6: INSIGHTS (ENFOQUE TOMA DE DECISIONES)
+        # =================================================
+        with tab6:
+            st.subheader("💡 Resumen de Hallazgos Clave e Inteligencia de Negocio")
+            st.write("Interpretación algorítmica y patrones de datos extraídos directamente del comportamiento de las variables activas:")
+            
+            # Generación de Insights Dinámicos según los datos presentes
+            if num_cols:
+                st.markdown("### 📊 Patrones en Variables Métricas")
+                for col in num_cols[:2]: # Analizamos las dos primeras variables numéricas de forma automatizada
+                    col_mean = df[col].mean()
+                    col_std = df[col].std()
+                    col_min = df[col].min()
+                    col_max = df[col].max()
+                    
+                    # Diagnóstico de variabilidad comercial o de proceso
+                    coef_variacion = (col_std / col_mean) if col_mean != 0 else 0
+                    grado_dispersion = "Alta volatilidad/dispersión" if coef_variacion > 0.3 else "Estabilidad comercial razonable"
+                    
+                    st.info(f"**Variable '{col}':** Presenta un promedio de `{col_mean:.2f}` con un rango de oscilación que va desde `{col_min:.2f}` hasta `{col_max:.2f}`. El coeficiente de variación indica un estado de: **{grado_dispersion}**.")
+            
+            if len(num_cols) >= 2:
+                st.markdown("### 🔗 Correlaciones e Interdependencia")
+                # Encontrar el par de variables con mayor correlación absoluta sin contar la diagonal
+                c_matrix = df[num_cols].corr().abs()
+                np.fill_diagonal(c_matrix.values, 0)
+                if not c_matrix.empty and c_matrix.max().max() > 0:
+                    max_corr_val = c_matrix.max().max()
+                    v1 = c_matrix.max().idxmax()
+                    v2 = c_matrix[v1].idxmax()
+                    st.success(f"🔍 **Patrón de Asociación Detectado:** Las variables **{v1}** y **{v2}** muestran la mayor fuerza de asociación lineal en el dataset actual con una correlación de `{max_corr_val:.2f}`. Cualquier cambio operativo o comercial en una de ellas repercutirá directamente en el comportamiento de la otra.")
+            
+            st.markdown("### 📈 Conclusión Estratégica para la Toma de Decisiones")
+            st.markdown(f"""
+            * **Optimización de Calidad:** La base de datos cuenta actualmente con un volumen de `{df.shape[0]}` filas válidas. Haber mitigado nulos o duplicados asegura certidumbre metodológica.
+            * **Enfoque en Procesos:** Se sugiere usar las segmentaciones cruzadas provistas en la **Tab 3** y **Tab 4** para identificar los nichos, categorías o clústeres operativos que concentran las anomalías estadísticas más críticas, reduciendo así la incertidumbre en las proyecciones de gestión.
+            """)
+            
     else:
-        st.error("No hay datos para analizar. Vaya primero a la sección '2. Carga y Perfil'.")
+        st.error("No hay datos cargados en el buffer. Regrese al Módulo '📂 2. Carga y Perfil' para inicializar el motor gráfico.")
