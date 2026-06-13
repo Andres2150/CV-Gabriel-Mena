@@ -537,8 +537,7 @@ elif pagina == "📊 4. Análisis Visual":
                     st.error("No se hallaron registros temporales válidos que puedan ser procesados secuencialmente.")
             else:
                 st.info("Se requiere una columna formateada como fecha o año en conjunto con variables numéricas para trazar la pestaña temporal.")
-
-        # =================================================
+# =================================================
         # TAB 6: INSIGHTS (ENFOQUE TOMA DE DECISIONES)
         # =================================================
         with tab6:
@@ -562,20 +561,28 @@ elif pagina == "📊 4. Análisis Visual":
             
             if len(num_cols) >= 2:
                 st.markdown("### 🔗 Correlaciones e Interdependencia")
-                # Encontrar el par de variables con mayor correlación absoluta sin contar la diagonal
-                c_matrix = df[num_cols].corr().abs()
-                np.fill_diagonal(c_matrix.values, 0)
-                if not c_matrix.empty and c_matrix.max().max() > 0:
-                    max_corr_val = c_matrix.max().max()
-                    v1 = c_matrix.max().idxmax()
-                    v2 = c_matrix[v1].idxmax()
-                    st.success(f"🔍 **Patrón de Asociación Detectado:** Las variables **{v1}** y **{v2}** muestran la mayor fuerza de asociación lineal en el dataset actual con una correlación de `{max_corr_val:.2f}`. Cualquier cambio operativo o comercial en una de ellas repercutirá directamente en el comportamiento de la otra.")
+                try:
+                    # Calculamos la matriz de correlación absoluta
+                    c_matrix = df[num_cols].corr().abs()
+                    
+                    # SOLUCIÓN DEL BUG: Convertimos explícitamente a un array de NumPy 
+                    # para asegurar la asignación en la diagonal sin romper restricciones de Pandas
+                    c_matrix_np = c_matrix.to_numpy()
+                    np.fill_diagonal(c_matrix_np, 0)
+                    
+                    # Reconstruimos temporalmente el DataFrame para buscar los índices máximos con comodidad
+                    c_matrix_clean = pd.DataFrame(c_matrix_np, index=c_matrix.index, columns=c_matrix.columns)
+                    
+                    if not c_matrix_clean.empty and c_matrix_clean.max().max() > 0:
+                        max_corr_val = c_matrix_clean.max().max()
+                        v1 = c_matrix_clean.max().idxmax()
+                        v2 = c_matrix_clean[v1].idxmax()
+                        st.success(f"🔍 **Patrón de Asociación Detectado:** Las variables **{v1}** y **{v2}** muestran la mayor fuerza de asociación lineal en el dataset actual con una correlación de `{max_corr_val:.2f}`. Cualquier cambio operativo o comercial en una de ellas repercutirá directamente en el comportamiento de la otra.")
+                except Exception as e:
+                    st.info("No se pudo automatizar el cálculo del par de variables con mayor correlación. Puedes revisar la matriz completa en la Tab 4.")
             
             st.markdown("### 📈 Conclusión Estratégica para la Toma de Decisiones")
             st.markdown(f"""
             * **Optimización de Calidad:** La base de datos cuenta actualmente con un volumen de `{df.shape[0]}` filas válidas. Haber mitigado nulos o duplicados asegura certidumbre metodológica.
-            * **Enfoque en Procesos:** Se sugiere usar las segmentaciones cruzadas provistas en la **Tab 3** y **Tab 4** para identificar los nichos, categorías o clústeres operativos que concentran las anomalías estadísticas más críticas, reduciendo así la incertidumbre en las proyecciones de gestión.
+            * **Enfoque en Procesos:** Se suger usar las segmentaciones cruzadas provistas en la **Tab 3** y **Tab 4** para identificar los nichos, categorías o clústeres operativos que concentran las anomalías estadísticas más críticas, reduciendo así la incertidumbre en las proyecciones de gestión.
             """)
-            
-    else:
-        st.error("No hay datos cargados en el buffer. Regrese al Módulo '📂 2. Carga y Perfil' para inicializar el motor gráfico.")
