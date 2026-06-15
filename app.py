@@ -1,3 +1,10 @@
+# Presentación del Proyecto
+# Esta es una Aplicación Interactiva construida íntegramente en Python con Streamlit. 
+# El objetivo es demostrar la capacidad de procesar, limpiar y analizar visualmente diversos conjuntos de datos de manera automatizada y dinámica.
+
+# Realizado por GABRIEL ANDRES MENA LOPEZ 
+# DMC PERU 
+
 import streamlit as st
 import pandas as pd
 import numpy as np
