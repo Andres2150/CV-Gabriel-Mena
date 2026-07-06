@@ -1,4 +1,4 @@
-# 👋 Hola, soy Gabriel Andrés Mena López
+# Gabriel Andrés Mena López
 
 ## 📖 Sobre mí
 
