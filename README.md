@@ -15,6 +15,25 @@ cumplimiento normativo.
 Mi perfil combina conocimiento del negocio energético, análisis de datos y generación de información 
 estratégica para apoyar la supervisión, gestión y mejora de procesos.  
 
+## 🌐 Connect with Me
+
+<p align="center">
+  <a href="https://github.com/Andres2150">
+    <img src="https://img.shields.io/badge/GitHub-Andres2150-181717?style=for-the-badge&logo=github" alt="GitHub">
+  </a>
+
+  <a href="https://www.linkedin.com/in/andresmena1">
+    <img src="https://img.shields.io/badge/LinkedIn-Andrés_Mena-0A66C2?style=for-the-badge&logo=linkedin" alt="LinkedIn">
+  </a>
+</p>
+
+---
+
+### 📫 Professional Profiles
+
+- **GitHub:** https://github.com/Andres2150
+- **LinkedIn:** https://www.linkedin.com/in/andresmena1
+
 Mi experiencia combina tres áreas fundamentales:
 
 - 📊 Business Intelligence
