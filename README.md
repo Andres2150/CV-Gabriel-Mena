@@ -137,15 +137,21 @@ energético, fortaleciendo el entendimiento de los procesos comerciales y regula
 
 ### Principales responsabilidades
 
-- Atención especializada a agentes del sector hidrocarburos.
-- Validación y registro de información comercial.
-- Elaboración de reportes comerciales.
-- Desarrollo de indicadores utilizando Excel.
-- Configuración de consultas en Oracle Discovery.
-- Supervisión de pases a producción del sistema SCOP.
-- Elaboración de procedimientos bajo ISO 9001.
-- Capacitación a usuarios del sistema SCOP.
-- Asesoría sobre procesos regulatorios.
+Funciones: Experiencia laboral en el Área Scop de Osinergmin, área de registros y validación de datos 
+Atención y resolución de consultas al cliente o usuario final en Call Center del Centro Scop, a usuarios 
+de plantas industriales, grifos a nivel nacional, plantas envasadoras de GLP, además de capacitación a 
+usuarios en el uso del Software Scop. 
+Experiencia en extracción, modelamiento para realizar reportes comerciales, aplicando filtros, gráficos 
+y tablas dinámicas; excelente manejo de Excel. 
+Habilitación y edición de registros supervisados y aceptados en Osinergmin. 
+Apoyo, análisis, asesoría en los diversos sistemas de control del Osinergmin del Centro Scop tales 
+como SPIC, SCOP-GLP, PRICE, PDJ, OPDH, CCE y CCA para todos los agentes que son parte del 
+sector de Comercialización de GLP, Hidrocarburos Líquidos y Otros Productos derivados de los 
+Hidrocarburos. 
+Conocimiento de Software Discovery (Aplicativo de Oracle); Configuración de Querys Además 
+supervisión y verificación realizando pases a producción del sistema de control SCOP. Experiencia en 
+la elaboración de manuales de procedimientos, como parte de la implementación y exigencias de la 
+Norma ISO 9001. 
 
 ---
 
