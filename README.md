@@ -89,17 +89,32 @@ Actualmente continúo desarrollando proyectos en **Python, SQL, Machine Learning
 
 ### Principales responsabilidades
 
-- Extracción de información mediante SQL y Oracle.
-- Validación y limpieza de datos.
-- Desarrollo de dashboards en Power BI.
-- Automatización de reportes con Excel y Power Pivot.
-- Elaboración de KPIs comerciales.
-- Análisis Exploratorio de Datos (EDA).
-- Identificación de tendencias comerciales.
-- Detección de anomalías y problemas de calidad de datos.
-- Supervisión de información del Sistema SCOP.
-- Capacitación a empresas del sector energético.
-- Elaboración de documentación técnica y manuales.
+Servicio a OSINERGMIN – Analista de Información Comercial y Procesos de Hidrocarburos 
+• Monitoreo, análisis y supervisión de información comercial relacionada con la cadena de distribución 
+y comercialización de hidrocarburos líquidos y GLP a nivel nacional, contribuyendo a los procesos de 
+control, fiscalización y toma de decisiones institucionales. 
+• Extracción, consulta, validación y procesamiento de datos mediante SQL sobre bases de datos Oracle, 
+garantizando la integridad, consistencia y disponibilidad de información crítica para la gestión 
+comercial y operativa. 
+• Diseño y desarrollo de soluciones de análisis de datos utilizando Excel Avanzado, Power Pivot y 
+Power BI para consolidar, modelar y visualizar información proveniente de múltiples fuentes 
+corporativas. 
+• Elaboración de reportes comerciales, dashboards ejecutivos e indicadores KPI relacionados con 
+ventas, abastecimiento, distribución y comercialización de hidrocarburos líquidos y GLP, facilitando el 
+monitoreo de la actividad del sector energético. 
+• Automatización y optimización de procesos de reportería mediante modelos de datos, tablas 
+dinámicas, Power Pivot y herramientas de análisis, reduciendo tiempos de procesamiento y mejorando 
+la disponibilidad de información para usuarios internos. 
+• Análisis exploratorio de datos (EDA), identificación de tendencias de mercado, patrones de 
+comportamiento comercial e incidencias operativas para apoyar actividades de supervisión, regulación y 
+planificación sectorial. 
+• Detección, análisis y corrección de inconsistencias, anomalías y problemas de calidad de datos, 
+fortaleciendo la confiabilidad de la información utilizada en procesos de seguimiento y control. 
+• Capacitación y asistencia técnica a agentes de la cadena de comercialización de combustibles sobre 
+flujos comerciales de hidrocarburos líquidos y GLP, uso del sistema SCOP, procedimientos operativos 
+y cumplimiento de la normativa vigente. 
+• Elaboración de material técnico, guías de usuario y sesiones de capacitación para empresas del sector 
+energético, fortaleciendo el entendimiento de los procesos comerciales y regulatorios. 
 
 ### Tecnologías utilizadas
 
