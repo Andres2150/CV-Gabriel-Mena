@@ -23,7 +23,7 @@ estratégica para apoyar la supervisión, gestión y mejora de procesos.
   </a>
 
   <a href="https://www.linkedin.com/in/andresmena1">
-    <img src="https://img.shields.io/badge/LinkedIn-Andrés_Mena-0A66C2?style=for-the-badge&logo=linkedin" alt="LinkedIn">
+    <img src="https://img.shields.io/badge/LinkedIn-Gabriel_Mena_López-0A66C2?style=for-the-badge&logo=linkedin" alt="LinkedIn">
   </a>
 </p>
 
