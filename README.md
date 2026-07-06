@@ -2,9 +2,18 @@
 
 ## 📖 Sobre mí
 
-Soy **Bachiller en Ingeniería Industrial** y Analista de Datos especializado en **Business Intelligence, Ciencia de Datos y análisis comercial**, con más de **9 años de experiencia** en el sector energético peruano.
-
-Durante mi trayectoria profesional he participado en el análisis de grandes volúmenes de datos comerciales, automatización de reportes, desarrollo de indicadores (KPIs), dashboards ejecutivos y generación de información estratégica para apoyar la toma de decisiones en organismos reguladores.
+Analista de Datos y Business Intelligence con más de 9 años de experiencia en el sector energético, 
+especializado en análisis comercial de hidrocarburos líquidos y GLP. Experiencia en extracción, 
+validación y análisis de datos utilizando SQL, Oracle, Excel Avanzado, Power Pivot y Power BI para la 
+elaboración de reportes, indicadores de gestión (KPIs) y dashboards orientados a la toma de decisiones. 
+Actualmente me desempeño en OSINERGMIN, participando en el monitoreo y análisis de información 
+comercial del Sistema de Control de Órdenes de Pedido (SCOP). Cuento con sólidos conocimientos de 
+los flujos comerciales, procesos operativos y normativa vigente del mercado de combustibles en el Perú. 
+Asimismo, he brindado capacitación y asistencia técnica a grifos, plantas envasadoras, distribuidores 
+minoristas y otros agentes del sector energético sobre procesos comerciales, uso de sistemas y 
+cumplimiento normativo. 
+Mi perfil combina conocimiento del negocio energético, análisis de datos y generación de información 
+estratégica para apoyar la supervisión, gestión y mejora de procesos.  
 
 Mi experiencia combina tres áreas fundamentales:
 
