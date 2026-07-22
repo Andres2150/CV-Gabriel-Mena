@@ -42,7 +42,8 @@ pagina = st.sidebar.radio(
         "Home",
         "2. Carga y Perfil",
         "3. Procesamiento",
-        "4. Análisis Visual"
+        "4. Análisis Visual",
+        "5. Analítica de Salud (IMC)"
     ]
 )
 
@@ -89,157 +90,6 @@ if pagina == "Home":
         """)
 
     st.divider()
-
-# =====================================================
-# 📊 CASO DE USO: ANALÍTICA DE SALUD - IMC
-# =====================================================
-
-st.header("📊 Caso de Uso: Analítica de Salud")
-st.write(
-    """
-    Esta sección demuestra el desarrollo de una aplicación analítica en Python
-    utilizando Streamlit para calcular indicadores de salud a partir del
-    Índice de Masa Corporal (IMC), aplicando los criterios establecidos por
-    la Organización Mundial de la Salud (OMS).
-    """
-)
-
-col1, col2 = st.columns(2)
-
-with col1:
-    peso = st.number_input(
-        "Peso (kg)",
-        min_value=20.0,
-        max_value=250.0,
-        value=80.0,
-        step=0.5
-    )
-
-with col2:
-    talla = st.number_input(
-        "Talla (metros)",
-        min_value=1.00,
-        max_value=2.50,
-        value=1.70,
-        step=0.01
-    )
-
-if talla > 0:
-
-    imc = peso / (talla ** 2)
-
-    st.metric("Índice de Masa Corporal (IMC)", f"{imc:.2f}")
-
-    # Clasificación OMS
-    if imc < 18.5:
-        categoria = "🔵 Bajo peso"
-        st.info(categoria)
-
-    elif imc < 25:
-        categoria = "🟢 Peso normal"
-        st.success(categoria)
-
-    elif imc < 30:
-        categoria = "🟡 Sobrepeso"
-        st.warning(categoria)
-
-    elif imc < 35:
-        categoria = "🟠 Obesidad Grado I"
-        st.warning(categoria)
-
-    elif imc < 40:
-        categoria = "🔴 Obesidad Grado II"
-        st.error(categoria)
-
-    else:
-        categoria = "🚨 Obesidad Grado III"
-        st.error(categoria)
-
-    st.divider()
-
-    st.subheader("Baremo OMS")
-
-    baremo = pd.DataFrame({
-        "Clasificación": [
-            "Bajo peso",
-            "Peso normal",
-            "Sobrepeso",
-            "Obesidad Grado I",
-            "Obesidad Grado II",
-            "Obesidad Grado III"
-        ],
-        "Rango IMC": [
-            "< 18.5",
-            "18.5 - 24.9",
-            "25.0 - 29.9",
-            "30.0 - 34.9",
-            "35.0 - 39.9",
-            "≥ 40"
-        ]
-    })
-
-    st.table(baremo)
-
-    st.subheader("Indicadores")
-
-    peso_ideal = 24.9 * (talla ** 2)
-    exceso = max(0, peso - peso_ideal)
-
-    c1, c2, c3 = st.columns(3)
-
-    with c1:
-        st.metric(
-            "Peso Ideal Máximo",
-            f"{peso_ideal:.1f} kg"
-        )
-
-    with c2:
-        st.metric(
-            "Exceso de Peso",
-            f"{exceso:.1f} kg"
-        )
-
-    with c3:
-        riesgo = min(imc / 40, 1.0)
-        st.metric(
-            "Nivel de Riesgo",
-            f"{riesgo*100:.0f}%"
-        )
-
-    st.progress(riesgo)
-
-    st.subheader("Interpretación")
-
-    if imc < 18.5:
-        st.info(
-            "El paciente presenta bajo peso. Se recomienda una evaluación nutricional para alcanzar un peso saludable."
-        )
-
-    elif imc < 25:
-        st.success(
-            "El IMC se encuentra dentro del rango recomendado por la Organización Mundial de la Salud."
-        )
-
-    elif imc < 30:
-        st.warning(
-            "Existe sobrepeso. Es recomendable mejorar los hábitos alimenticios e incrementar la actividad física para disminuir el riesgo cardiovascular."
-        )
-
-    elif imc < 35:
-        st.warning(
-            "Se identifica obesidad grado I. Es recomendable iniciar un programa supervisado de reducción de peso."
-        )
-
-    elif imc < 40:
-        st.error(
-            "Se identifica obesidad grado II. Se recomienda evaluación médica y tratamiento multidisciplinario."
-        )
-
-    else:
-        st.error(
-            "Se identifica obesidad grado III. Existe un riesgo elevado para la salud y se recomienda atención médica especializada."
-        )
-
 # =============================================================================================================================================================
     
     st.header("Descripción de los cuatro datasets")
@@ -727,3 +577,109 @@ elif pagina == "4. Análisis Visual":
             
     else:
         st.error("No hay datos cargados en el buffer. Regrese al Módulo '📂 2. Carga y Perfil' para inicializar el motor gráfico.")
+
+
+elif pagina == "5. Analítica de Salud (IMC)":
+
+
+    elif pagina == "5. Analítica de Salud (IMC)":
+
+    st.title("📊 Módulo 5: Analítica de Salud")
+
+    st.write("""
+    Ejemplo de aplicación desarrollada en Python y Streamlit para el cálculo
+    del Índice de Masa Corporal (IMC) utilizando los criterios de la
+    Organización Mundial de la Salud (OMS).
+    """)
+
+    st.divider()
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+        peso = st.number_input(
+            "Peso (kg)",
+            min_value=20.0,
+            max_value=250.0,
+            value=80.0,
+            step=0.5
+        )
+
+    with col2:
+        talla = st.number_input(
+            "Talla (m)",
+            min_value=1.00,
+            max_value=2.50,
+            value=1.70,
+            step=0.01
+        )
+
+    imc = peso / (talla ** 2)
+
+    st.metric("Índice de Masa Corporal", f"{imc:.2f}")
+
+    if imc < 18.5:
+        st.info("🔵 Bajo peso")
+    elif imc < 25:
+        st.success("🟢 Peso normal")
+    elif imc < 30:
+        st.warning("🟡 Sobrepeso")
+    elif imc < 35:
+        st.warning("🟠 Obesidad Grado I")
+    elif imc < 40:
+        st.error("🔴 Obesidad Grado II")
+    else:
+        st.error("🚨 Obesidad Grado III")
+
+    st.divider()
+
+    st.subheader("Baremo OMS")
+
+    tabla = pd.DataFrame({
+        "Clasificación":[
+            "Bajo peso",
+            "Peso normal",
+            "Sobrepeso",
+            "Obesidad I",
+            "Obesidad II",
+            "Obesidad III"
+        ],
+        "IMC":[
+            "<18.5",
+            "18.5 - 24.9",
+            "25 - 29.9",
+            "30 - 34.9",
+            "35 - 39.9",
+            "≥40"
+        ]
+    })
+
+    st.table(tabla)
+
+    st.divider()
+
+    peso_ideal = 24.9 * talla**2
+    exceso = max(0, peso - peso_ideal)
+
+    c1, c2, c3 = st.columns(3)
+
+    c1.metric("Peso ideal máximo", f"{peso_ideal:.1f} kg")
+    c2.metric("Exceso de peso", f"{exceso:.1f} kg")
+    c3.metric("IMC", f"{imc:.2f}")
+
+    st.progress(min(imc/40,1.0))
+
+    st.subheader("Interpretación")
+
+    if imc < 18.5:
+        st.info("Se recomienda mejorar el estado nutricional.")
+    elif imc < 25:
+        st.success("El peso se encuentra dentro del rango saludable.")
+    elif imc < 30:
+        st.warning("Existe sobrepeso. Es recomendable mejorar los hábitos alimenticios y aumentar la actividad física.")
+    elif imc < 35:
+        st.warning("Existe obesidad grado I.")
+    elif imc < 40:
+        st.error("Existe obesidad grado II.")
+    else:
+        st.error("Existe obesidad grado III.")
